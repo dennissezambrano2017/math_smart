@@ -22,64 +22,13 @@
 <body>
 
   <main>
-    <header>
-      <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <img src="{% static '../static/img/logo.png' %}">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/"
-                  style="color: #FDB128;font-weight: bold">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/signup" style="color: #FDB128;font-weight: bold">Regístrate</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/signin" style="color: #FDB128;font-weight: bold">Inicia Sesión</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </header>
-
-    {% block content %}
-    {% endblock %}
-
-    <footer class="section-footer">
-      <div class="container_footer">
-        <div class="box_footer">
-          <div class="logo">
-            <img src="{% static '../static/img/logo.png' %}">
-          </div>
-          <div class="terms">
-            <p style="font-family: 'PT Sans', sans-serif;">Nuestra plataforma interactiva y personalizada está diseñada
-              para brindar una
-              experiencia educativa efectiva, accesible para cualquier persona, en cualquier lugar.</p>
-          </div>
-        </div>
-        <div class="box_footer">
-          <h4>Redes Sociales</h4>
-          <a href="#"><i class="fab fa-brands fa-facebook" style="color: #fdb128;"></i> Facebook</a>
-          <a href="#"><i class="fab fa-brands fa-x-twitter" style="color: #fdb128;"></i> Twitter</a>
-          <a href="#"><i class="fab fa-brands fa-instagram" style="color: #fdb128;"></i> Instagram</a>
-        </div>
+    <div class="row text-center justify-content-center">
+      <div class="col">
+          <h1 class="display-4">Hello World!</h1>
       </div>
-      <div class="box_copy">
-        <hr>
-        <p>
-          &copy; Smart Genius 2023.
-          <b>Todos los derechos reservados</b>
-        </p>
-      </div>
-    </footer>
-
+      {% block content %}
+      {% endblock %}  
+  </div>
   </main>
 
 </body>
