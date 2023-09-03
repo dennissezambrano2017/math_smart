@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Registrarse{% endblock %}
+{% block content %}
+<div class="container-fluid-signup">
+   <form action="/signup/" method="POST">
+      {% csrf_token %}
+      <div class="container-form-signup">
+         <div class="information">
+            <div class="info-childs">
+               <h2>Bienvenido</h2>
+               <p>Para unirte a nuestra comunidad por favor Inicia Sesión con tus datos</p>
+               <a href="{% url 'signin' %}">
+                  <span>Iniciar Sesión</span>
+               </a>
+            </div>
+         </div>
+         <div class="form-information">
+            <div class="form-information-childs">
+               <h2>Crear una cuenta</h2>
+               <div class="form-div">
+                  <label>
+                     <i class="fa-solid fa-user" style="color: #fdb128;"></i>
+                     <input type="username" name="email" id="email" placeholder="Nombre de usuario" required>
+                  </label>
+                  <label>
+                     <i class="fa-solid fa-envelope" style="color: #fdb128;"></i>
+                     <input type="email" name="username" id="username" placeholder="Correo Electronico" required>
+                  </label>
+                  <label>
+                     <i class="fa-solid fa-unlock-keyhole" style="color: #fdb128;"></i>
+                     <input type="password" name="password1" id="password1" placeholder="Contraseña" required>
+                  </label>
+                  <label>
+                     <i class="fa-solid fa-unlock-keyhole" style="color: #fdb128;"></i>
+                     <input type="password" name="password2" id="password2" placeholder="Repetir Contraseña" required>
+                  </label>
+                  {% if error %}
+                  <p class="error-message">{{ error }}</p>
+                  {% endif %}
+                  <button>Registrarse</button>
+               </div>
+            </div>
+         </div>
+
+      </div>
+   </form>
+</div>
+{% endblock %}
