@@ -1,0 +1,49 @@
+/* * {
+    transition: all 0.3s;
+} */
+
+.panel {
+    background: #ffd899;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.border-gray {
+    border: 1px solid gray;
+}
+
+.btn-white {
+    background-color: white;
+    border: none;
+    padding: 8px;
+    width: 300px;
+    border-radius: 10px;
+}
+
+.btn-white:hover {
+    background-color: #b6caf0;
+}
+
+.dropdown-item:hover {
+    background-color: #b6caf0;
+}
+
+.opc {
+    background: white;
+    width: 60%;
+    max-width: 550px;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.opc:hover {
+    transform: scale(1.05);
+    background-color: #b8b2a6;
+}
+#list-tab {
+    pointer-events: none; /* Deshabilita eventos de puntero en el div */
+    opacity: 0.6; /* Cambia la opacidad para indicar que está deshabilitado*/
+}
