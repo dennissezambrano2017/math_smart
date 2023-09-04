@@ -4,7 +4,7 @@
 {% block content %}
 <di class="container by-5">
     {% csrf_token %}
-    <h4>Bienvenid@ a Smart Genius {% if user_username %}{{ user_emails }}{% else %}Invitado{% endif %}</h4>
+    <h4>Bienvenid@ a Smart Genius {% if user_username %}{{ user_email }}{% else %}Invitado{% endif %}</h4>
     {% if user.is_authenticated %}
     {% if perms.tasks.add_unidad %}
     <div class="container mt-4">
