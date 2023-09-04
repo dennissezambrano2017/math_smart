@@ -121,6 +121,45 @@
     No se encontraron resultados.
 </p>
 {% endif %}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">¡Recomendación Importante!</h5>
+            </div>
+            <div class="modal-body">
+                <p>¡Hola! ¡Te sugerimos revisar los videos recomendados para obtener información adicional
+                    que podría ayudarte a resolver los ejercicios! Una nueva perspectiva puede marcar la
+                    diferencia. ¡Échales un vistazo y vuelve cuando estés listo para resolver los
+                    ejercicios!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" id="openModalButton" data-bs-toggle="modal"
+                    data-bs-target="#videosModal"><i class="fa-solid fa-play"></i>Ver Videos</button>
+                <button type="button" class="btn btn-danger" id="cancelarModalButton"> <i class="fa-solid fa-ban"></i>
+                    Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="videosModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Recomendación de videos</h5>
+                <button type="button" class="btn-close" id="close"></button>
+            </div>
+            <div class="modal-body video">
+                <div class="container">
+                    <div class="row" id="modalVideoContainer">
+                        <!-- Aquí se agregarán las tarjetas de video dinámicamente con JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
 {% block js %}

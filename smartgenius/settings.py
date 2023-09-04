@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from django.conf import settings
 import os
 import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,6 +26,13 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'RENDER' not in os.environ
+
+if settings.DEBUG:
+    # Estamos en un entorno local, permitir cualquier iframe
+    X_FRAME_OPTIONS = 'SAMEORIGIN'
+else:
+    # Estamos en línea, permitir solo desde un dominio específico
+    X_FRAME_OPTIONS = 'ALLOW-FROM https://smart-qbyq.onrender.com/'
 
 ALLOWED_HOSTS = []
 
@@ -54,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+X_FRAME_OPTIONS = 'ALLOW-FROM *'
 
 ROOT_URLCONF = 'smartgenius.urls'
 
