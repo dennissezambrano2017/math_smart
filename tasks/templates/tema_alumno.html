@@ -1,0 +1,171 @@
+{% extends 'base-profile.html' %}
+{% load static %}
+{% block title %}Contenido{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/style-tema-alu.css' %}">
+{% endblock css %}
+{% block content %}
+<div>
+    <span class="fw-bold fs-4" style="color: #fdb128">TEMAS</span>
+</div>
+<span id="name" style="display: none;">{% if user_email %}{{ user_username }}{% else %}Invitado{% endif %}</span>
+{% if temas %}
+<div class="row">
+    <div class="btn-group mt-2 col-4">
+        <button type="button" class="btn-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <span>Seleccione un tema</span>
+        </button>
+        <ul class="dropdown-menu">
+            {% for tema in temas %}
+            <li><a class="dropdown-item btn-tema" id="{{tema.id}}" href="#">{{tema.nombre}}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="position-relative">
+        <div class="position-absolute bottom-0 end-0">
+            <button type="button" id="atras" class="btn btn-outline-secondary">
+                <i class="fa-solid fa-arrow-left-long"></i>
+                Atrás
+            </button>
+        </div>
+    </div>
+    <script>
+        document.getElementById('atras').addEventListener('click', function () {
+            window.history.back();
+        });
+    </script>
+
+</div>
+
+<div id="viewText" class="col-8 text-center w-100 mt-3"></div>
+<div>
+    <div class="rounded mt-2 border-gray">
+        <div class="row m-3">
+            <div class="list-group col-md-3" id="list-tab" role="tablist">
+                <a href="#list-home" class="list-group-item list-group-item-action active" id="list-home-list"
+                    data-bs-toggle="list" role="tab" aria-controls="list-home">
+                    <span>Contenido</span>
+                </a>
+                <a href="#list-profile" class="list-group-item list-group-item-action" id="list-profile-list" role="tab"
+                    data-bs-toggle="list" aria-controls="list-profile">
+                    <span>Recursos</span>
+                </a>
+                <a href="#list-questions" class="list-group-item list-group-item-action" id="list-questions-list"
+                    role="tab" data-bs-toggle="list" aria-controls="list-questions">
+                    <span>Práctica</span>
+                </a>
+                <div class="d-flex justify-content-center my-3">
+                    <img style="width: 150px; height: 150px;" src="{% static '../static/img/notebook-class.svg' %}">
+                </div>
+            </div>
+            <div class="border-gray col-md-9 rounded h-auto">
+                <div class="tab-content w-100 h-100">
+                    <!-- Visor PDF -->
+                    <div class="tab-pane fade show active h-100" id="list-home" role="tabpanel"
+                        aria-labelledby="list-home-list">
+                        <iframe id="pdfViewer" class="w-100 h-100 rounded" src="" frameborder="0"></iframe>
+                    </div>
+
+                    <!-- Reproductor de video -->
+                    <div class="tab-pane fade w-100 h-100" id="list-profile" role="tabpanel"
+                        aria-labelledby="list-profile-list">
+                        <div class="d-flex justify-content-center align-items-center h-100">
+                            <iframe class="rounded" id="videoViewer" width="600" height="350" src="" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+
+                    <!-- Ejercicios planteados -->
+                    <div class="tab-pane fade show h-100 rounded panel mb-2" id="list-questions" role="tabpanel"
+                        aria-labelledby="list-questions-list">
+                        <div
+                            class="w-100 h-100 d-inline-flex flex-column justify-content-center align-items-center gap-2">
+                            <div class="p-1 text-black fw-bold" id="puntaje"></div>
+                            <div class="position-relative bg-white rounded w-75 p-1">
+                                <div class="opacity-25 text-start" id="categoria">
+                                </div>
+                                <div class="position-absolute opacity-25 text-black" id="numero"></div>
+                                <div class="p-1 fw-bold" id="pregunta"></div>
+                            </div>
+                            <div class="opc rounded" id="btn1" onclick="oprimir_btn(0)"></div>
+                            <div class="opc rounded" id="btn2" onclick="oprimir_btn(1)"></div>
+                            <div class="opc rounded" id="btn3" onclick="oprimir_btn(2)"></div>
+                            <div class="opc rounded" id="btn4" onclick="oprimir_btn(3)"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="row">
+    <div class="position-relative">
+        <div class="position-absolute bottom-0 end-0">
+            <button type="button" id="atras" class="btn btn-outline-secondary">
+                <i class="fa-solid fa-arrow-left-long"></i>
+                Atrás
+            </button>
+        </div>
+    </div>
+    <script>
+        document.getElementById('atras').addEventListener('click', function () {
+            window.history.back();
+        });
+    </script>
+</div>
+<div class="ilustracion d-flex justify-content-center align-items-center mt-5">
+    <img style="width: 200px; height: 200px;" src="{% static '../static/img/not-data.svg' %}">
+</div>
+<p class="text-center mt-3 fw-bold fs-6" style="color: #fdb128">
+    No se encontraron resultados.
+</p>
+{% endif %}
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">¡Recomendación Importante!</h5>
+            </div>
+            <div class="modal-body">
+                <p>¡Hola! ¡Te sugerimos revisar los videos recomendados para obtener información adicional
+                    que podría ayudarte a resolver los ejercicios! Una nueva perspectiva puede marcar la
+                    diferencia. ¡Échales un vistazo y vuelve cuando estés listo para resolver los
+                    ejercicios!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" id="openModalButton" data-bs-toggle="modal"
+                    data-bs-target="#videosModal"><i class="fa-solid fa-play"></i>Ver Videos</button>
+                <button type="button" class="btn btn-danger" id="cancelarModalButton"> <i class="fa-solid fa-ban"></i>
+                    Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="videosModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Recomendación de videos</h5>
+                <button type="button" class="btn-close" id="close"></button>
+            </div>
+            <div class="modal-body video">
+                <div class="container">
+                    <div class="row" id="modalVideoContainer">
+                        <!-- Aquí se agregarán las tarjetas de video dinámicamente con JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/tema_alumno.js'%}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.0/dist/sweetalert2.all.min.js"></script>
+{% endblock js %}
