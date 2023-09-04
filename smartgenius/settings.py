@@ -27,12 +27,14 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'RENDER' not in os.environ
 
+
 if settings.DEBUG:
-    # Estamos en un entorno local, permitir cualquier iframe
-    X_FRAME_OPTIONS = 'SAMEORIGIN'
+    # Estamos en un entorno local, no establecer X-Frame-Options
+    X_FRAME_OPTIONS = 'DENY'
 else:
     # Estamos en línea, permitir solo desde un dominio específico
     X_FRAME_OPTIONS = 'ALLOW-FROM https://smart-qbyq.onrender.com/'
+
 
 ALLOWED_HOSTS = []
 
