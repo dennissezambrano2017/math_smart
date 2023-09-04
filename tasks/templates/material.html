@@ -3,6 +3,112 @@
 {% block title %}Material{% endblock %}
 {% block content %}
 <h2 class="dash-title">Listado de Material</h2>
+<section class="row pl-5 w-100">
+    <section class="form-group justify-content-center">
+        <section class="col-sm-12">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalRegist-material"
+            data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    title="Haz clic aquí para registrar un material.">
+                <i class="fa fa-plus-circle"></i> Nuevo Material
+            </button>
+            <div id="alertContainer" class="position-absolute top-0 end-0"
+                style="padding-top: 20px;padding-right: 10px;">
+                <div id="alertMessage" class="alert" style="display: none;"></div>
+            </div>
+        </section>
+    </section>
+</section>
+<div class="row">
+    <div class="col-md-12 tabla-tema mt-3">
+        <table class="table table-bordered">
+            <thead class="table-primary fixed-column-width">
+                <tr class="encabezados-tabla">
+                    <th scope="col">Id</th>
+                    <th scope="col">Tema</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                {% if material %}
+                <!-- Mostrar materiales no relacionados -->
+                {% for m in material %}
+                {% if m.ejercicio_set.all.count == 0 %}
+                <tr class="cuerpo-tabla" data-id="{{ m.id }}">
+                    <th scope="row">{{ m.id }}</th>
+                    <td class="nombre-tema">{{ m.tema }}</td>
+                    <td class="btnAc">
+                        <button type="button" vid="{{ m.id }}" class="btnViewMaterial btn btn-secondary"
+                            data-bs-toggle="modal" data-bs-target="#modalView-material"
+                            data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    title="Haz clic aquí para visualizar la información del material.">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                        <button type="button" vid="{{ m.id }}" class="btnEditMaterial btn btn-warning"
+                            data-bs-toggle="modal" data-bs-target="#modalEdit-material"
+                            data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    title="Haz clic aquí para editar la información del material.">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                        <a class="btn btn-danger" href="javascript:confi_delet_material({{m.id}});"
+                        data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    title="Haz clic aquí para eliminar el material.">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+
+                <!-- Mostrar materiales relacionados -->
+                {% for m in material %}
+                {% if m.ejercicio_set.all.count > 0 %}
+                <tr class="cuerpo-tabla" data-id="{{ m.id }}">
+                    <th scope="row">{{ m.id }}</th>
+                    <td class="nombre-tema">{{ m.tema }}</td>
+                    <td class="btnAc">
+                        <button type="button" vid="{{ m.id }}" class="btnViewMaterial btn btn-secondary"
+                            data-bs-toggle="modal" data-bs-target="#modalView-material">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                        <button type="button" vid="{{ m.id }}" class="btnEditMaterial btn btn-warning"
+                            data-bs-toggle="modal" data-bs-target="#modalEdit-material">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                {% else %}
+                <p>No se encontraron contenidos registrados.</p>
+                {% endif %}
+            </tbody>
+        </table>
+        <!-- Mostrar los enlaces de paginación -->
+        <div class="d-flex justify-content-center mt-3" class="page-link">
+            <div class="pagination">
+                {% if material.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ material.previous_page_number }}">Anterior</a>
+                </li>
+                {% endif %}
+
+                <li class="page-item"><a class="page-link">
+                        Página {{ material.number }} de {{ material.paginator.num_pages }}</a></li>
+
+                {% if material.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ material.next_page_number }}">Sigiente</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="?page={{ material.paginator.num_pages }}">Ultimo</a>
+                </li>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 {% block js %}
 <script src="{% static 'js/material.js'%}"></script>

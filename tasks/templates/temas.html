@@ -4,6 +4,84 @@
 {% block content %}
 <h2 class="dash-title">Listado de Tema</h2>
 {% endblock %}
+<section class="row pl-5 w-100">
+    <section class="form-group justify-content-center">
+        <section class="col-sm-12">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalRegister-Tema"
+            data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    title="Haz clic aquí para registrar nuevos temas.">
+                <i class="fa fa-plus-circle"></i> Nuevo Tema
+            </button>
+            <div id="alertContainer" class="position-absolute top-0 end-0"
+                style="padding-top: 20px;padding-right: 10px;">
+                <div id="alertMessage" class="alert" style="display: none;"></div>
+            </div>
+        </section>
+    </section>
+</section>
+<div class="row">
+    <div class="col-md-12 tabla-tema mt-3">
+        <table class="table table-bordered">
+            <thead class="table-primary fixed-column-width">
+                <tr style="text-align: center; padding: 4px 8px;">
+                    <th scope="col">Id</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Contenido</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider ">
+                {% if temas %}
+                {% for u in temas %}
+                <tr style="text-align: left;" data-id="{{ u.id }}">
+                    <th scope="row">{{ u.id }}</th>
+                    <td class="nombre-tema">{{ u.nombre }}</td>
+                    <td class="contenido-tema">{{ u.contenido }}</td>
+                    <td style="text-align: center;">
+                        <a class="btn btn-danger" href="javascript:confi_delet_tema({{u.id}});"
+                        data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    title="Haz clic aquí para eliminar este tema."><i
+                                class="fa fa-trash" aria-hidden="true"></i></a>
+                        <button type="button" vid="{{ u.id }}" class="btnObtenerTema btn btn-warning"
+                            data-bs-toggle="modal" data-bs-target="#modalEdit-Tema"
+                            data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    title="Haz clic aquí para editar este tema.">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <p>No se encontraron contenido registradas.</p>
+                {% endif %}
+            </tbody>
+        </table>
+        <!-- Mostrar los enlaces de paginación -->
+        <div class="d-flex justify-content-center mt-3" class="page-link">
+            <div class="pagination">
+                {% if temas.has_previous %}
+                {% comment %} <li class="page-item"><a class="page-link" href="?page=1">1</a></li> {% endcomment %}
+                <li class="page-item"><a class="page-link" href="?page={{ temas.previous_page_number }}">Anterior</a>
+                </li>
+                {% endif %}
+
+                <li class="page-item disabled">
+                    <a class="page-link fw-bold">
+                        Página {{ temas.number }} de {{ temas.paginator.num_pages }}
+                    </a>
+                </li>
+
+                {% if temas.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ temas.next_page_number }}">Siguiente</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ temas.paginator.num_pages }}">Ultimo</a></li>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
 {% block js %}
 <script src="{% static 'js/tema.js'%}"></script>
 <script src="{% static 'js/contenido.js'%}"></script>

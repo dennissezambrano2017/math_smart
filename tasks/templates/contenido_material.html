@@ -3,4 +3,71 @@
 {% block title %}Contenido y Recursos{% endblock %}
 {% block content %}
 <h2 class="dash-title">Contenido y Recursos</h2>
+{% for unidad in unidades %}
+<div class="caja-contenido">
+    <h2>Unidad: {{ unidad.nombre }}</h2>
+    <div class="btnDescarga">
+        <a class="btnImprimir" href="{% url 'imprimir_unidad' unidad.id %}" target="_blank" data-bs-placement="top"
+            data-bs-custom-class="custom-tooltip" title="Haz clic aquí para descargar el PDF de la Unidad.">
+            <i class="fa-solid fa-file-arrow-down"></i>Descargar Unidad
+        </a>
+    </div>
+    {% for contenido in contenidos %}
+    {% if contenido.unidad == unidad %}
+    <div class="caja-contenido-adentro">
+        <h3>Contenido: {{ contenido.nombre }}</h3>
+        <div class="caja-description">
+            <p>➣ Descripción del Contenido: {{ contenido.descripcion }}</p>
+            {% for tema in temas %}
+            {% if tema.contenido == contenido %}
+            <div class="caja-tema">
+                <h4>Tema: {{ tema.nombre }}</h4>
+                <div class="caja-recursos">
+                    <h5>Recursos planificados</h5>
+                    <h5>Enlace</h5>
+                    <ul>
+                        {% for material in materiales %}
+                        {% if material.tema == tema %}
+                        <li>
+                            {% if material.enlace %}
+                            <a href="{{ material.enlace }}" target="_blank">{{ material.enlace }}</a>
+                            {% endif %}
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                    <h5>Archivo Pdf</h5>
+                    <ul>
+                        {% for material in materiales %}
+                        {% if material.tema == tema %}
+                        <li>
+                            {% if material.archivo_pdf %}
+                            <a href="{{ material.archivo_pdf.url }}" target="_blank">Ver PDF</a>
+                            {% endif %}
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                    <h5>Ejercicios</h5>
+                    <ul>
+                        {% for ejercicio in ejercicios %}
+                        {% if ejercicio.material.tema == tema %}
+                        <li>
+                            {% if ejercicio.enunciado %}
+                            {{ ejercicio.enunciado }}
+                            {% endif %}
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endfor %}
 {% endblock %}

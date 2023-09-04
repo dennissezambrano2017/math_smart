@@ -3,6 +3,81 @@
 {% block title %}Unidad{% endblock %}
 {% block content %}
 <h2 class="dash-title">Listado de Unidad</h2>
+<section class="row pl-5 w-100">
+    <section class="form-group justify-content-center">
+        <section class="col-sm-12">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalRegister-Unidad"
+                    data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    title="Haz clic aquí para registrar nuevas unidades.">
+                <i class="fa fa-plus-circle"></i> Nueva Unidad
+            </button>
+            <div id="alertContainer" class="position-absolute top-0 end-0"
+                style="padding-top: 20px;padding-right: 10px;">
+                <div id="alertMessage" class="alert" style="display: none;"></div>
+            </div>
+        </section>
+
+    </section>
+</section>
+<div class="row">
+    <div class="col-md-12 tabla-unidad mt-3">
+        <table class="table table-bordered">
+            <thead class="table-primary">
+                <tr style="text-align: center; padding: 4px 8px;">
+                    <th scope="col">Id</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider ">
+                {% if unidad %}
+                {% for u in unidad %}
+                <tr style="text-align: left;" data-id="{{ u.id }}">
+                    <th scope="row">{{ u.id }}</th>
+                    <td class="nombre-unidad">{{ u.nombre }}</td>
+                    <td style="text-align: center;">
+                        <a class="btn btn-danger" href="javascript:confi_delet_unidad({{u.id}});"
+                        data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    title="Haz clic aquí para eliminar la unidad."
+                        ><i class="fa fa-trash"
+                                aria-hidden="true"></i></a>
+                        <button type="button" vid="{{ u.id }}" class="btnObtenerUnidad btn btn-warning"
+                            data-bs-toggle="modal" data-bs-target="#modalEdit-Unidad"
+                            data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    title="Haz clic aquí para modificar la unidad.">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <p>No se encontraron unidades registradas.</p>
+                {% endif %}
+            </tbody>
+        </table>
+        <!-- Mostrar los enlaces de paginación -->
+        <div class="d-flex justify-content-center mt-3" class="page-link">
+            <div class="pagination">
+                {% if unidad.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ unidad.previous_page_number }}">Anterior</a>
+                </li>
+                {% endif %}
+
+                <li class="page-item"><a class="page-link">
+                    Página {{ unidad.number }} de {{ unidad.paginator.num_pages }}</a></li>
+
+                {% if unidad.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ unidad.next_page_number }}">Sigiente</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ unidad.paginator.num_pages }}">Ultimo</a></li>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 {% block js %}
 <script src="{% static 'js/unidad.js'%}"></script>

@@ -3,6 +3,77 @@
 {% block title %}Contenido{% endblock %}
 {% block content %}
 <h2 class="dash-title">Listado de Contenido</h2>
+<section class="row pl-5 w-100">
+    <section class="form-group justify-content-center">
+      <section class="col-sm-12">
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalRegister-Contenido"
+          data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+          title="Haz clic aquí para registrar un nuevo Contenido.">
+          <i class="fa fa-plus-circle"></i> Nuevo Contendio
+        </button>
+        <div id="alertContainer" class="position-absolute top-0 end-0" style="padding-top: 20px;padding-right: 10px;">
+          <div id="alertMessage" class="alert" style="display: none;"></div>
+        </div>
+      </section>
+  
+    </section>
+  </section>
+  <div class="row">
+    <div class="col-md-12 tabla-unidad mt-3">
+      <table class="table table-bordered">
+        <thead class="table-primary fixed-column-width">
+          <tr class="encabezados-tabla">
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+            <th class="descripcion" scope="col">Descripción</th>
+            <th scope="col">Unidad</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider ">
+          {% if contenido %}
+          {% for u in contenido %}
+          <tr class="cuerpo-tabla" data-id="{{ u.id }}">
+            <th scope="row">{{ u.id }}</th>
+            <td class="nombre-contenido">{{ u.nombre }}</td>
+            <td class="descripcion-contenido">{{ u.descripcion }}</td>
+            <td class="unidad-contenido">{{ u.unidad }}</td>
+            <td class="btnAc">
+              <a class="btn btn-danger" href="javascript:confi_delet_contenido({{u.id}});"><i class="fa fa-trash"
+                  aria-hidden="true" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                  title="Haz clic aquí para eliminar el Contenido."></i></a>
+              <button type="button" vid="{{ u.id }}" class="btnObtenerContenido btn btn-warning" data-bs-toggle="modal"
+                data-bs-target="#modalEdit-Contenido" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                title="Haz clic aquí para editar el Contenido.">
+                <i class="fa-solid fa-pen"></i>
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+          {% else %}
+          <p>No se encontraron contenido registradas.</p>
+          {% endif %}
+        </tbody>
+      </table>
+      <!-- Mostrar los enlaces de paginación -->
+      <div class="d-flex justify-content-center mt-3" class="page-link">
+        <div class="pagination">
+          {% if contenido.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ contenido.previous_page_number }}">Anterior</a></li>
+          {% endif %}
+  
+          <li class="page-item"><a class="page-link">
+              Página {{ contenido.number }} de {{ contenido.paginator.num_pages }}</a></li>
+  
+          {% if contenido.has_next %}
+          <li class="page-item"><a class="page-link" href="?page={{ contenido.next_page_number }}">Sigiente</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ contenido.paginator.num_pages }}">Ultimo</a></li>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 {% block js %}
 <script src="{% static 'js/contenido.js'%}"></script>

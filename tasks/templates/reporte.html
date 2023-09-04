@@ -3,4 +3,90 @@
 {% block title %}Reporte Estudiante{% endblock %}
 {% block content %}
 <h2 class="dash-title">Reporte de estudiante</h2>
+<div class="row pl-5 w-100">
+    <form method="get">
+        <div class="form-group justify-content-center">
+            <div class="col-sm-12">
+                <label for="busqueda_estudiante">Filtrar por nombre de usuario:</label>
+                <input type="text" id="busqueda_estudiante" name="busqueda_estudiante" />
+                <button class="btn btn-primary" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                    title="Haz clic cuando necesite buscar un estudiante y la caja de texto tenga un valor.">
+                    <i class="fa-solid fa-magnifying-glass"></i> Buscar
+                </button>
+                <!-- Botón de restablecimiento -->
+                <button id="restablecerBoton" class="btn btn-secondary"> <i class="fa-solid fa-rotate-right"></i>
+                    Restablecer</button>
+                <script>
+                    document.getElementById('restablecerBoton').addEventListener('click', function () {
+                        // Obtén la URL actual
+                        var currentURL = window.location.href;
+
+                        // Divide la URL en partes usando '?' como separador
+                        var parts = currentURL.split('?');
+
+                        // Reemplaza la URL actual con la parte antes del '?'
+                        window.history.replaceState({}, document.title, parts[0]);
+                    });
+                </script>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="row">
+    <div class="col-md-12 tabla-unidad mt-3">
+        <table class="table table-bordered">
+            <thead class="table-primary fixed-column-width">
+                <tr class="encabezados-tabla">
+                    <th>Nº</th>
+                    <th>Nombre de usuario</th>
+                    <th style="width: 30x;">Estado del Usuario</th>
+                    <th>Último Tema practicado</th>
+                    <th>Puntuación</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider ">
+                {% if page_obj %}
+                {% for usuario in page_obj %}
+                <tr class="cuerpo-tabla">
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ usuario.usuario }}</td>
+                    {% if usuario.esta_activo %}
+                    <td style="width: 30x;">Activo</td>
+                    {% else %}
+                    <td style="width: 30x;">Inactivo</td>
+                    {% endif %}
+                    <td>{{ usuario.tema }}</td>
+                    <td>{{ usuario.puntaje }}</td>
+                    <td>{{ usuario.fecha|date:'b. d, Y, H:i' }}</td>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <p>No se encontraron estudiantes registrados.</p>
+            </tbody>
+        </table>
+        <!-- Mostrar los enlaces de paginación -->
+        <div class="d-flex justify-content-center mt-3" class="page-link">
+            <div class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                </li>
+                {% endif %}
+
+                <li class="page-item"><a class="page-link">
+                        Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</a></li>
+
+                {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Último</a>
+                </li>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endblock %}
