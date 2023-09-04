@@ -1,0 +1,71 @@
+{% extends 'base-profile.html' %}
+{% load static %}
+{% block title %}Avance{% endblock %}
+{% block content %}
+<span class="fw-bold fs-4" style="color: #fdb128">MI AVANCE</span>
+<div class="d-flex">
+    <div class="p-2 flex-fill" style="max-width: 200px">
+        <select id="unidad-select" class="form-select" aria-label="Unidad select" onchange="cargarContenidos()">
+            <option value="">Selecciona una unidad</option>
+            {% for unidad in unidades %}
+            <option value="{{ unidad.id }}">{{ unidad.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="p-2 flex-fill" style="max-width: 300px">
+        <select id="contenido-select" class="form-select" aria-label="Contenido select" onchange="cargarTemas()">
+            <option selected>Selecciona un contenido</option>
+        </select>
+    </div>
+
+    <div class="p-2 flex-fill" style="max-width: 300px">
+        <select id="tema-select" class="form-select" aria-label="Tema select">
+            <option selected>Selecciona un tema</option>
+        </select>
+    </div>
+    <div class="p-2 flex-fill" style="max-width: 200px">
+        <button id="filtrar" type="button" class="btn btn-primary" onclick="filtrarPuntuacion()"
+            disabled>Buscar</button>
+    </div>
+    <!-- Botón de restablecimiento -->
+    <div class="p-2 flex-fill" style="max-width: 200px">
+        <button id="restablecer" class="btn btn-secondary">Restablecer</button>
+        <script>
+            document.getElementById('restablecer').addEventListener('click', function () {
+                window.location.reload();
+            });
+        </script>
+    </div>
+
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Tema</th>
+            <th>Resultado corecto</th>
+            <th>Puntaje</th>
+            <th style="text-align: center;">Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if puntuaciones %}{% for puntuacion in puntuaciones %}
+        <tr>
+            <td>{{ puntuacion.tema }}</td>
+            <td style="text-align: center;">{{ puntuacion.preguntas_respondidas }}</td>
+            <td style="text-align: center;">{{ puntuacion.puntaje }}</td>
+            <td>{{ puntuacion.fecha }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <p>¡Aún no hay progreso! Cuando veamos alguna actividad, los progresos se mostrarán aquí.</p>
+        {% endif %}
+        <p id="mensaje-vacio" style="display: none;">¡Aún no hay progreso con el tema seleccionado! Cuando veamos alguna
+            actividad, los progresos se mostrarán aquí.</p>
+    </tbody>
+</table>
+{% endblock %}
+{% block js %}
+<script src="{% static 'js/avance.js'%}"></script>
+{% endblock %}

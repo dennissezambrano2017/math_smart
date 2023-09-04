@@ -1,0 +1,161 @@
+{% extends 'base-profile.html' %}
+{% load static %}
+{% block title %}Perfil{% endblock %}
+{% block content %}
+
+<span class="fw-bold fs-4" style="color: #fdb128">Información personal</span>
+<section class="row pl-5 w-100">
+    <section class="form-group justify-content-center">
+        <section class="col-sm-12">
+            <div id="alertContainer" class="position-absolute top-0 end-0"
+                style="padding-top: 20px;padding-right: 10px;">
+                <div id="alertMessage" class="alert" style="display: none;"></div>
+            </div>
+        </section>
+    </section>
+</section>
+<div class="profile-container">
+    <div class="profile-heading">Datos Personales<i class="fa-solid fa-address-card"></i></div>
+    <div class="mb-3 row">
+        <label for="username" class="col-sm-2 col-form-label">
+            Usuario:
+        </label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="username" name="username" value="{{ user_email }}" disabled>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="firstname" class="col-sm-2 col-form-label">Nombres:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="firstname" name="firstname" value="{{ user_first_name }}" disabled>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="lastname" class="col-sm-2 col-form-label">Apellidos:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="lastname" name="lastname" value="{{ user_last_name }}" disabled>
+        </div>
+    </div>
+    <div class="profile-heading">Datos de Sesión <i class="fa-solid fa-id-card"></i></div>
+    <div class="mb-3 row">
+        <label for="email" class="col-sm-2 col-form-label">Email:</label>
+        <div class="col-sm-10">
+            <input type="email" class="form-control" id="email" name="email" value="{{ user_username }}" disabled>
+        </div>
+    </div>
+    <div class="row g-3">
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3" data-bs-toggle="modal"
+                data-bs-target="#cambiarContraseña"
+                data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    title="Haz clic aquí para cambiar su contraseña.">
+                <i class="fa-solid fa-unlock-keyhole"></i>
+                Cambiar contraseña
+            </button>
+        </div>
+    </div>
+    <div class="row g-3">
+        <div class="col-auto">
+            <button type="submit" class="searchButton btn btn-warning mb-3" data-bs-toggle="modal" data-bs-target="#EditarUsuario"
+            data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    title="Haz clic aquí para modificar la información personal.">
+                <i class="fa-solid fa-user-pen"></i>
+                Editar Perfil
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="cambiarContraseña" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form class="was-validated" id="formCanbiarContra" novalidate method="POST">
+        {% csrf_token %}
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Cambiar Contraseña</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <label>Nueva Contraseña:</label>
+
+                    <input type="new-password" class="form-control" name="password1" id="password1"
+                        placeholder="Contraseña" required>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" data-bs-dismiss="modal"><i
+                            class="fa fa-ban"></i>
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-sm btn-success">
+                        <i class="fas fa-save"></i>
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal fade" id="EditarUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form method="POST" class="was-validated" id="formEditarUser" novalidate>
+        {% csrf_token %}
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Información personal</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="profile-heading">Datos Personales</div>
+                    <div class="mb-3 row">
+                        <label for="username" class="col-sm-2 col-form-label">Usuario:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="usernameEdit" id="usernameEdit" required>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="firstname" class="col-sm-2 col-form-label">Nombres:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="firstnameEdit" id="firstnameEdit">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="lastname" class="col-sm-2 col-form-label">Apellidos:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="lastnameEdit" id="lastnameEdit">
+                        </div>
+                    </div>
+                    <div class="profile-heading">Datos de Sesión</div>
+                    <div class="mb-3 row">
+                        <label for="email" class="col-sm-2 col-form-label">Email:</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" name="emailEdit" id="emailEdit" required>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" data-bs-dismiss="modal"><i
+                            class="fa fa-ban"></i>
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-sm btn-success">
+                        <i class="fas fa-save"></i>
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+{% block js %}
+<script src="{% static 'js/perfil.js'%}"></script>
+<script src="{% static 'js/unidad.js'%}"></script>
+{% endblock %}

@@ -81,6 +81,129 @@
         </div>
     </div>
 </div>
+<!-- Modal Agregar -->
+<div class="modal fade" id="modalRegister-Tema" tabindex="-1" aria-labelledby="modalRegister-TemaLabel"
+    aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <form method="POST" class="was-validated" id="formRgTema" novalidate>
+        {% csrf_token %}
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalTema-ContenidoLabel">Registro de Contenido</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        onclick="restablecer()"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre del Tema</label>
+                        <input type="text" class="form-control" id="nombreTema" placeholder="Ingrese el nombre del tema"
+                        name="nombreTema" maxlength="100"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Seleccionar contenido</label>
+                        <select class="form-select" aria-label="Default select example" id="selectRegisterTema"
+                            required>
+                        </select>
+                        <div id="alertContainer" style="padding-top: 20px;padding-right: 10px;">
+                            <div id="alertMessageRegister" class="alert" style="display: none;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" data-bs-dismiss="modal"
+                        onclick="restablecer()">
+                        <i class="fa fa-ban"></i>
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-sm btn-success">
+                        <i class="fas fa-save"></i>
+                        Guardar
+                    </button>
+                    <div id="alerta">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Modal Modificar -->
+<div class="modal fade" id="modalEdit-Tema" tabindex="-1" aria-labelledby="modalEdit-TemaLabel" aria-hidden="true"
+    data-backdrop="static" data-keyboard="false">
+    <form method="POST" class="was-validated" id="formModTema">
+        {% csrf_token %}
+        <input type="hidden" id="txtIdTema" name="txtIdTema">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalEdit-TemaLabel">Editar Contenido</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        onclick="restablecer()"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre del Tema</label>
+                        <input type="text" class="form-control" id="nombreTemaModi" name="nombreTemaModi"
+                            maxlength="100" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="selectRegisterTemaModi" class="form-label">Seleccionar contenido</label>
+                        <select class="form-select" aria-label="Default select example" id="selectRegisterTemaModi"
+                            name="selectRegisterTemaModi" required>
+                        </select>
+                        <div id="alertContainer" style="padding-top: 20px;padding-right: 10px;">
+                            <div id="alertMessageModif" class="alert" style="display: none;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" data-bs-dismiss="modal"
+                        onclick="restablecer()">
+                        <i class="fa fa-ban"></i> Cancelar
+                    </button>
+                    <button type="submit" id="btnGuardarCmUnidad" class="btn btn-sm btn-success">
+                        <i class="fas fa-save"></i> Guardar cambios
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<!--Modal Eliminar-->
+<div class="modal fade" id="modalDelet" tabindex="-1" aria-labelledby="modalDeletLabel" aria-hidden="true"
+    data-backdrop="static" data-keyboard="false">
+    <form class="was-validated" id="formDeletTema">
+        {% csrf_token %}
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalDeletLabel">Eliminar Tema</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+                </div>
+                <div class="modal-body" id="modalContenido">
+                    <div class="mb-3">
+                        <p>¿Estás seguro de que deseas eliminar este tema?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" data-bs-dismiss="modal">
+                        <i class="fa fa-ban"></i>
+                        Cancelar
+                    </button>
+                    <button type="submit" onclick='delete_tema(" + idTema + ")' class="btn btn-sm btn-success">
+                        <i class="fas fa-save"></i>
+                        Aceptar
+                    </button>
+                    <div id="alerta">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 {% endblock %}
 {% block js %}
 <script src="{% static 'js/tema.js'%}"></script>
