@@ -21,6 +21,13 @@
         </div>
     </div>
     {% endfor %}
+    {% else %}
+    <div class="ilustracion d-flex justify-content-center align-items-center mt-5">
+        <img style="width: 200px; height: 200px;" src="{% static 'img/not-data.svg' %}">
+    </div>
+    <p class="text-center mt-3 fw-bold fs-6" style="color: #fdb128">
+        No se encontraron resultados.
+    </p>
     {% endif %}
 </div>
 {% endblock %}
