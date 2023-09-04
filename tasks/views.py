@@ -71,10 +71,10 @@ def signup(request):
                         'delete_unidad',
                         'view_unidad',
                     ]
-                    print(permissions_to_assign)
                     for permission_code in permissions_to_assign:
                         permission = Permission.objects.get(codename=permission_code)
                         user.user_permissions.add(permission)
+                    user.is_staff = True
                 else:
                     # No dar permiso como docente
                     user.is_staff = False
