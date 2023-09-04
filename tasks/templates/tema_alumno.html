@@ -55,13 +55,16 @@
                     <span>Práctica</span>
                 </a>
                 <div class="d-flex justify-content-center my-3">
-                    <img style="width: 150px; height: 150px;" src="{% static '../static/img/notebook-class.svg' %}">
+                    <img style="width: 150px; height: 150px;" src="{% static 'img/notebook-class.svg' %}">
                 </div>
             </div>
             <div class="border-gray col-md-9 rounded h-auto">
                 <div class="tab-content w-100 h-100">
-                    
-
+                    <!-- Visor PDF -->
+                    <div class="tab-pane fade show active h-100" id="list-home" role="tabpanel"
+                        aria-labelledby="list-home-list">
+                        <iframe id="pdfViewer" class="w-100 h-100 rounded" src="" frameborder="0"></iframe>
+                    </div>
                     <!-- Reproductor de video -->
                     <div class="tab-pane fade w-100 h-100" id="list-profile" role="tabpanel"
                         aria-labelledby="list-profile-list">
