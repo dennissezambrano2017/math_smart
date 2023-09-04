@@ -207,11 +207,13 @@ $(document).ready(function () {
 // Capturar el clic en el botón "Cancelar"
 function restablecer() {
     console.log("Restableciendo campos...1")
+    var selectUnidad = $("#selectRegisterTemaModi");
+    // Vaciar el select antes de agregar nuevas opciones
+    selectUnidad.empty();
     // Restablecer los valores de los campos a vacío
     $("#nombreContenido").val('');
     $("#descripcionContenido").val('');
     $("#nombreTema").val('');
-    
     $('#preguntaOpciones').val('');
     $('#preguntaEnunciado').val('');
 };

@@ -59,20 +59,20 @@ $(".btnObtenerTema").click(function () {
             console.log(d.nombre + d.tema_id + d.contenido_id)
             var PreseleccionadaId = d.contenido_id;
             var selectUnidad = $("#selectRegisterTemaModi");
-
+            // Vaciar el select antes de agregar nuevas opciones
+            selectUnidad.html('');
+            console.log(selectUnidad)
             // Iterar a través de los datos y agregar opciones al select
             $.each(d.contenidos, function (index, contenido) {
                 // Crear la opción y establecer los atributos
                 var option = $('<option>', {
                     value: contenido.id,
                     text: contenido.nombre
-
                 });
                 // Si la unidad actual es la preseleccionada, establecer el atributo "selected"
                 if (contenido.id === PreseleccionadaId) {
                     option.prop("selected", true);
                 }
-
                 // Agregar la opción al select
                 selectUnidad.append(option);
             });
@@ -182,6 +182,7 @@ $(document).ready(function () {
         type: 'GET',
         dataType: 'json',
         success: function (data) {
+            selectContenido.empty();
             // Iterar a través de los datos y agregar opciones al select
             $.each(data, function (index, contenido) {
                 selectContenido.append($('<option>', {

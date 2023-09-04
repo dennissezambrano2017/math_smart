@@ -639,6 +639,7 @@ def vwObtener_Temas(request):
     temas_registrados = Material.objects.values_list('tema__id', flat=True)
     temas_no_registrados = Tema.objects.exclude(
         id__in=temas_registrados).values('id', 'nombre')
+    print(temas_no_registrados)
     return JsonResponse(list(temas_no_registrados), safe=False)
 
 
@@ -862,7 +863,7 @@ def vwTemaAlumno(request):
         'materiales': materiales,
         'ejercicios': ejercicios,
     }
-
+    print(context)
     return render(request, 'tema_alumno.html', context)
 
 

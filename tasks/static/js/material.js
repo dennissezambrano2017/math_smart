@@ -4,6 +4,43 @@ var opcionesDetalle = [];
 var botonAgregado = false;
 var botonAgregadoEdit = false;
 var idListMaterial = 0;
+
+$(document).ready(function () {
+    // Obtener el elemento select
+    var selectUnidad = $('#selectViewTema-ma');
+    $.ajax({
+        url: '/obtener_temas/',
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            // Iterar a través de los datos y agregar opciones al select
+            $.each(data, function (index, unidad) {
+                selectUnidad.append($('<option>', {
+                    value: unidad.id,
+                    text: unidad.nombre
+                }));
+            });
+        },
+        error: function () {
+            console.log('Error al cargar los datos de unidades.');
+        }
+    });
+
+    // Obtener el valor del parámetro en la URL
+    var params = new URLSearchParams(window.location.search);
+    var showAlert = params.get('showAlert');
+
+    if (showAlert === 'true') {
+        // Mostrar la alerta de éxito
+        mostrarAlerta("Se registro el contenido correctamente.", "success", "#alertMessage");
+
+        // Remover el parámetro de la URL para que no se acumule
+        history.replaceState({}, document.title, window.location.pathname);
+    }
+
+
+
+});
 autosize($('#preguntaOpciones'));
 $(".btnViewMaterial").click(function () {
     var csrftoken = getCookie('csrftoken');
@@ -108,44 +145,7 @@ $(".btnViewMaterial").click(function () {
         console.log('Error en la solicitud AJAX');
     });
 });
-$(document).ready(function () {
-    // Obtener el elemento select
-    var selectUnidad = $('#selectViewTema-ma');
 
-    // Lógica para cargar los datos de unidades en el select
-    $.ajax({
-        url: '/obtener_temas/',
-        type: 'GET',
-        dataType: 'json',
-        success: function (data) {
-            // Iterar a través de los datos y agregar opciones al select
-            $.each(data, function (index, unidad) {
-                selectUnidad.append($('<option>', {
-                    value: unidad.id,
-                    text: unidad.nombre
-                }));
-            });
-        },
-        error: function () {
-            console.log('Error al cargar los datos de unidades.');
-        }
-    });
-
-    // Obtener el valor del parámetro en la URL
-    var params = new URLSearchParams(window.location.search);
-    var showAlert = params.get('showAlert');
-
-    if (showAlert === 'true') {
-        // Mostrar la alerta de éxito
-        mostrarAlerta("Se registro el contenido correctamente.", "success", "#alertMessage");
-
-        // Remover el parámetro de la URL para que no se acumule
-        history.replaceState({}, document.title, window.location.pathname);
-    }
-
-
-
-});
 function confi_delet_ejercicio(id) {
     // Obtener una referencia al modal
     var modal = $('#modalDelet');
