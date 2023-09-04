@@ -159,7 +159,53 @@ def get_user_data(request):
 
 @login_required
 def profile(request):
-    return render(request, 'profile.html')
+    # Obtener todas las puntuaciones de los estudiantes
+    puntuaciones = Puntuacion.objects.all()
+
+    # Inicializar la lista temas_info para realizar un seguimiento de la cantidad de prácticas por tema
+    temas_info = []
+
+    # Calcular la cantidad de prácticas por tema
+    for puntuacion in puntuaciones:
+        tema = puntuacion.tema.nombre  # Nombre del tema
+
+        # Actualizar o agregar el tema a la lista temas_info
+        encontrado = False
+        for tema_info in temas_info:
+            if tema_info['tema'] == tema:
+                tema_info['cantidad_practicas'] += 1
+                encontrado = True
+                break
+
+        if not encontrado:
+            temas_info.append({'tema': tema, 'cantidad_practicas': 1})
+        
+    # Comprobar si temas_info está vacío
+    if not temas_info:
+        mensaje = "Ningún estudiante ha practicado temas aún."
+        context = {'mensaje': mensaje}
+    else:
+        # Crear un DataFrame a partir de la lista de información del tema
+        df = pd.DataFrame(temas_info)
+
+        # Ordenar los temas por la cantidad de prácticas
+        df = df.sort_values(by='cantidad_practicas', ascending=False)
+
+        # Crear el gráfico de barras utilizando Plotly Express
+        fig = px.bar(df, x='tema', y='cantidad_practicas', title='Temas más Practicados',
+                     color='tema', labels={'tema': 'Tema', 'cantidad_practicas': 'Cantidad de Prácticas'})
+
+        # Personalizar el diseño del gráfico
+        fig.update_layout(title_x=0.5, xaxis_title="Tema", yaxis_title="Cantidad de Prácticas", showlegend=False)
+
+        # Convertir el gráfico a HTML
+        grafico_html = fig.to_html(full_html=False)
+
+        # Enviar el gráfico HTML al contexto
+        context = {'grafico_html': grafico_html}
+
+    # Renderizar la plantilla 'profile.html' con el gráfico o el mensaje
+    return render(request, 'profile.html', context)
 
 
 @login_required
@@ -167,45 +213,6 @@ def signout(request):
     logout(request)
     return redirect('home')
 
-
-@login_required
-def inicio(request):
-    puntuaciones_usuario = Puntuacion.objects.all()
-    temas_practicados = {}
-    for puntuacion in puntuaciones_usuario:
-        tema_id = puntuacion.tema.id
-        if tema_id in temas_practicados:
-            temas_practicados[tema_id] += 1
-        else:
-            temas_practicados[tema_id] = 1
-    temas_info = []
-    for tema_id, practicas in temas_practicados.items():
-        tema = Tema.objects.get(id=tema_id)
-        tema_dict = {
-            'id': tema_id,
-            'tema': tema.nombre,
-            'cantidad_estudiantes': practicas
-        }
-        temas_info.append(tema_dict)
-
-    df = pd.DataFrame(temas_info)
-    fig = px.bar(df, x='tema', y='cantidad_estudiantes', title='Prácticas por Tema',
-                 color_discrete_sequence=['blue'], opacity=0.7)
-    fig.update_layout(title_x=0.5)
-    fig.update_traces(marker_line_width=0.1)
-    fig.update_layout(yaxis_tickmode='linear', plot_bgcolor='white')
-    fig.update_layout(
-        xaxis_title="Tema",
-        yaxis_title="Cantidad de Estudiantes",
-        yaxis_tickmode='linear',
-        plot_bgcolor='white',
-        font=dict(family="Arial", size=12, color="black"),
-        showlegend=False)
-    grafico_html = fig.to_html(full_html=False)
-    context = {
-        'grafico_html': grafico_html
-    }
-    return render(request, 'inicio.html', context)
 
 # Vista que renderiza la plantilla que lista los unidades registrados
 

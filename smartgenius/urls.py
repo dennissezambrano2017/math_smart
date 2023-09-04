@@ -30,7 +30,6 @@ urlpatterns = [
     path('profile/', views.profile, name='perfil'),
     path('logout/', views.signout, name='logout'),
     path('signin/', views.signin, name='signin'),
-    path('inicio/', views.inicio, name='inicio'),
     path('cambiar_contrasena/', views.change_password, name='cambiar_contrasena'),
     path('get_user_data/', views.get_user_data, name='get_user_data'),
     path('edit_perfil/', views.edit_usuario, name='edit_perfil'),

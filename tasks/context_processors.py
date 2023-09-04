@@ -10,7 +10,7 @@ def user_email(request):
         username = None
         first_name = None
         last_name = None
-
+    print(email)
     return {
         'user_email': email,
         'user_username': username,

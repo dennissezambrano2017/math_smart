@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="{% static 'img/Logo-Page.png' %}" type="image/png" />
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+  <link rel="stylesheet" href="{% static 'css/style-profile.css' %}"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Merriweather&family=PT+Sans&family=Playfair+Display:wght@500&display=swap"
+    rel="stylesheet"/>
+  <script src="https://kit.fontawesome.com/41bcea2ae3.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+    <input type="checkbox" id="panel-izquierdo-boton">
+    <div class="panel-izquierdo">
+        {% csrf_token %}
+        <div class="panel-izquierdo-encabezados">
+            <h3>
+                <span class="fa-solid fa-square-root-variable"></span>
+                <span> <a href="{% url 'perfil' %}">Smart Genius</a></span>
+            </h3>
+            <label for="panel-izquierdo-boton" class="fa-solid fa-bars"></label>
+        </div>
+        <div class="panel-izquierdo-opciones">
+            <ul>
+                {% if user.is_authenticated %}
+                {% if perms.tasks.add_unidad %}
+                <li>
+                    <a class="btn-opcion {{ btnUnidad }}" href="{% url 'unidad' %}">
+                        <span class="fas fa-clipboard-check"></span>
+                        <span>Unidad</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'contenido' %}">
+                        <span class="fas fa-book-open"></span>
+                        <span>Contenido</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'temas' %}">
+
+                        <span class="fas fa-lightbulb"></span>
+                        <span>Temas</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'material' %}">
+                        <span class="fas fa-file-alt"></span>
+                        <span>Material</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'visualizar_reporte' %}">
+                        <span class="fa-solid fa-clipboard-user"></span>
+                        <span>Reportes Estudiantes</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'aula_documento' %}">
+                        <span class="fa-solid fa-file"></span>
+                        <span>Reportes Contenido</span>
+                    </a>
+                </li>
+                {% else %}
+                <li>
+                    <a href="{% url 'contenido_alu' %}">
+                        <span class="fa-solid fa-book-open"></span>
+                        <span>Contenido</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'perfil_alu' %}">
+                        <span class="fa-solid fa-user"></span>
+                        <span>Perfil</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'avance_alu' %}">
+                        <span class="fa-solid fa-layer-group"></span>
+                        <span>Mi Avance</span>
+                    </a>
+                </li>
+                <!--<li>
+                    <a href="{% url 'recomendacion' %}">
+                        <span class="fa-solid fa-layer-group"></span>
+                        <span>Recomendacion</span>
+                    </a>
+                </li>-->
+                {% endif %}
+                <li>
+                    <a href="{% url 'logout' %}">
+                        <span class="fa-solid fa-right-from-bracket"></span>
+                        <span>Cerrar Sesión</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+
+        <header class="encabezados-contenido">
+            <div class="search-wrapper">
+
+            </div>
+
+            <div class="social-icons me-4">
+                <span class="fa-solid fa-user"></span>
+                <span>{% if user_email %}{{ user_email }}{% else %}Invitado{% endif %}</span>
+            </div>
+        </header>
+
+        <main>
+
+            {% block content %}
+            {% endblock %}
+
+
+        </main>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+    <script src="{% static 'js/global.js'%}"></script>
+    {% block js %}
+    {% endblock js %}
+
+</body>
+
+</html>
