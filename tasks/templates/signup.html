@@ -18,7 +18,15 @@
          <div class="form-information">
             <div class="form-information-childs">
                <h2>Crear una cuenta</h2>
+               <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                  <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked value="estudiante">
+                  <label class="btn btn-outline-primary" for="btnradio1">Estudiante</label>
+              
+                  <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" value="docente">
+                  <label class="btn btn-outline-primary" for="btnradio2">Docente</label>
+              </div>
                <div class="form-div">
+                  
                   <label>
                      <i class="fa-solid fa-user" style="color: #fdb128;"></i>
                      <input type="username" name="email" id="email" placeholder="Nombre de usuario" required>

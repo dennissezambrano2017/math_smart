@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,Permission
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
 from django.db import IntegrityError
 from .models import Unidad, Contenido, Material, Tema, Ejercicio, Puntuacion
@@ -25,6 +25,8 @@ import random
 import pandas as pd
 import plotly.express as px
 from django.db.models import Count
+from django.contrib.contenttypes.models import ContentType
+from django.db import IntegrityError
 
 # Create your views here.
 
@@ -48,6 +50,34 @@ def signup(request):
                 # Register User
                 user = User.objects.create_user(
                     username=request.POST['username'], email=request.POST['email'], password=request.POST['password1'])
+                # Verificar el valor del botón de radio seleccionado
+                user_type = request.POST.get('btnradio')
+                if user_type == 'docente':
+                    permissions_to_assign = [
+                        'add_contenido',
+                        'change_contenido',
+                        'delete_contenido',
+                        'view_contenido',
+                        'add_material',
+                        'change_material',
+                        'delete_material',
+                        'view_material',
+                        'add_tema',
+                        'change_tema',
+                        'delete_tema',
+                        'view_tema',
+                        'add_unidad',
+                        'change_unidad',
+                        'delete_unidad',
+                        'view_unidad',
+                    ]
+                    print(permissions_to_assign)
+                    for permission_code in permissions_to_assign:
+                        permission = Permission.objects.get(codename=permission_code)
+                        user.user_permissions.add(permission)
+                else:
+                    # No dar permiso como docente
+                    user.is_staff = False
                 user.save()
                 login(request, user)
                 return redirect('perfil')
