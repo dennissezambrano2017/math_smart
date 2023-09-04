@@ -9,34 +9,6 @@
     <span class="fw-bold fs-4" style="color: #fdb128">TEMAS</span>
 </div>
 <span id="name" style="display: none;">{% if user_email %}{{ user_username }}{% else %}Invitado{% endif %}</span>
-{% if temas %}
-
-{% else %}
-<div class="row">
-    <div class="position-relative">
-        <div class="position-absolute bottom-0 end-0">
-            <button type="button" id="atras" class="btn btn-outline-secondary">
-                <i class="fa-solid fa-arrow-left-long"></i>
-                Atrás
-            </button>
-        </div>
-    </div>
-    <script>
-        document.getElementById('atras').addEventListener('click', function () {
-            window.history.back();
-        });
-    </script>
-</div>
-<div class="ilustracion d-flex justify-content-center align-items-center mt-5">
-    <img style="width: 200px; height: 200px;" src="{% static '../static/img/not-data.svg' %}">
-</div>
-<p class="text-center mt-3 fw-bold fs-6" style="color: #fdb128">
-    No se encontraron resultados.
-</p>
-{% endif %}
-
-
-
 {% endblock %}
 {% block js %}
 <script src="{% static 'js/tema_alumno.js'%}"></script>
