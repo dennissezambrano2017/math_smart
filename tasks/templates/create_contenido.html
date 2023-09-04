@@ -4,76 +4,209 @@
 {% block content %}
 <h2 class="dash-title">Listado de Contenido</h2>
 <section class="row pl-5 w-100">
-    <section class="form-group justify-content-center">
-      <section class="col-sm-12">
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalRegister-Contenido"
-          data-bs-placement="top" data-bs-custom-class="custom-tooltip"
-          title="Haz clic aquí para registrar un nuevo Contenido.">
-          <i class="fa fa-plus-circle"></i> Nuevo Contendio
-        </button>
-        <div id="alertContainer" class="position-absolute top-0 end-0" style="padding-top: 20px;padding-right: 10px;">
-          <div id="alertMessage" class="alert" style="display: none;"></div>
-        </div>
-      </section>
-  
+  <section class="form-group justify-content-center">
+    <section class="col-sm-12">
+      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalRegister-Contenido"
+        data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+        title="Haz clic aquí para registrar un nuevo Contenido.">
+        <i class="fa fa-plus-circle"></i> Nuevo Contendio
+      </button>
+      <div id="alertContainer" class="position-absolute top-0 end-0" style="padding-top: 20px;padding-right: 10px;">
+        <div id="alertMessage" class="alert" style="display: none;"></div>
+      </div>
     </section>
   </section>
-  <div class="row">
-    <div class="col-md-12 tabla-unidad mt-3">
-      <table class="table table-bordered">
-        <thead class="table-primary fixed-column-width">
-          <tr class="encabezados-tabla">
-            <th scope="col">Id</th>
-            <th scope="col">Nombre</th>
-            <th class="descripcion" scope="col">Descripción</th>
-            <th scope="col">Unidad</th>
-            <th scope="col">Acciones</th>
-          </tr>
-        </thead>
-        <tbody class="table-group-divider ">
-          {% if contenido %}
-          {% for u in contenido %}
-          <tr class="cuerpo-tabla" data-id="{{ u.id }}">
-            <th scope="row">{{ u.id }}</th>
-            <td class="nombre-contenido">{{ u.nombre }}</td>
-            <td class="descripcion-contenido">{{ u.descripcion }}</td>
-            <td class="unidad-contenido">{{ u.unidad }}</td>
-            <td class="btnAc">
-              <a class="btn btn-danger" href="javascript:confi_delet_contenido({{u.id}});"><i class="fa fa-trash"
-                  aria-hidden="true" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
-                  title="Haz clic aquí para eliminar el Contenido."></i></a>
-              <button type="button" vid="{{ u.id }}" class="btnObtenerContenido btn btn-warning" data-bs-toggle="modal"
-                data-bs-target="#modalEdit-Contenido" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
-                title="Haz clic aquí para editar el Contenido.">
-                <i class="fa-solid fa-pen"></i>
-              </button>
-            </td>
-          </tr>
-          {% endfor %}
-          {% else %}
-          <p>No se encontraron contenido registradas.</p>
-          {% endif %}
-        </tbody>
-      </table>
-      <!-- Mostrar los enlaces de paginación -->
-      <div class="d-flex justify-content-center mt-3" class="page-link">
-        <div class="pagination">
-          {% if contenido.has_previous %}
-          <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
-          <li class="page-item"><a class="page-link" href="?page={{ contenido.previous_page_number }}">Anterior</a></li>
-          {% endif %}
-  
-          <li class="page-item"><a class="page-link">
-              Página {{ contenido.number }} de {{ contenido.paginator.num_pages }}</a></li>
-  
-          {% if contenido.has_next %}
-          <li class="page-item"><a class="page-link" href="?page={{ contenido.next_page_number }}">Sigiente</a></li>
-          <li class="page-item"><a class="page-link" href="?page={{ contenido.paginator.num_pages }}">Ultimo</a></li>
-          {% endif %}
-        </div>
+</section>
+<div class="row">
+  <div class="col-md-12 tabla-unidad mt-3">
+    <table class="table table-bordered">
+      <thead class="table-primary fixed-column-width">
+        <tr class="encabezados-tabla">
+          <th scope="col">Id</th>
+          <th scope="col">Nombre</th>
+          <th class="descripcion" scope="col">Descripción</th>
+          <th scope="col">Unidad</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider ">
+        {% if contenido %}
+        {% for u in contenido %}
+        <tr class="cuerpo-tabla" data-id="{{ u.id }}">
+          <th scope="row">{{ u.id }}</th>
+          <td class="nombre-contenido">{{ u.nombre }}</td>
+          <td class="descripcion-contenido">{{ u.descripcion }}</td>
+          <td class="unidad-contenido">{{ u.unidad }}</td>
+          <td class="btnAc">
+            <a class="btn btn-danger" href="javascript:confi_delet_contenido({{u.id}});"><i class="fa fa-trash"
+                aria-hidden="true" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                title="Haz clic aquí para eliminar el Contenido."></i></a>
+            <button type="button" vid="{{ u.id }}" class="btnObtenerContenido btn btn-warning" data-bs-toggle="modal"
+              data-bs-target="#modalEdit-Contenido" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+              title="Haz clic aquí para editar el Contenido.">
+              <i class="fa-solid fa-pen"></i>
+            </button>
+          </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <p>No se encontraron contenido registradas.</p>
+        {% endif %}
+      </tbody>
+    </table>
+    <!-- Mostrar los enlaces de paginación -->
+    <div class="d-flex justify-content-center mt-3" class="page-link">
+      <div class="pagination">
+        {% if contenido.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ contenido.previous_page_number }}">Anterior</a></li>
+        {% endif %}
+
+        <li class="page-item"><a class="page-link">
+            Página {{ contenido.number }} de {{ contenido.paginator.num_pages }}</a></li>
+
+        {% if contenido.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ contenido.next_page_number }}">Sigiente</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ contenido.paginator.num_pages }}">Ultimo</a></li>
+        {% endif %}
       </div>
     </div>
   </div>
+</div>
+
+<!-- Modal Agregar -->
+<div class="modal fade" id="modalRegister-Contenido" tabindex="-1" aria-labelledby="modalRegister-ContenidoLabel"
+  aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <form method="POST" class="was-validated" id="formRgContenido" novalidate>
+    {% csrf_token %}
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modalRegister-ContenidoLabel">Registro de Contenido</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            onclick="restablecer()"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Selecciona una unidad</label>
+            <select class="form-select" aria-label="Default select example" id="selectRegisterContenido" required>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Nombre del Contenido</label>
+            <input type="text" class="form-control" id="nombreContenido" placeholder="Ingrese el nombre del contenido"
+              name="nombreContenido" maxlength="100" required>
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Descripcion</label>
+            <textarea type="text" class="form-control" id="descripcionContenido"
+              placeholder="(Opcional) Ingrese una descripcion" name="descripcionContenido" maxlength="5500"></textarea>
+            <div id="alertContainer" style="padding-top: 20px;padding-right: 10px;">
+              <div id="alertMessageRegister" class="alert" style="display: none;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" data-bs-dismiss="modal"
+            onclick="restablecer()">
+            <i class="fa fa-ban"></i>
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-sm btn-success">
+            <i class="fas fa-save"></i>
+            Guardar
+          </button>
+          <div id="alerta">
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Modal Modificar -->
+<div class="modal fade" id="modalEdit-Contenido" tabindex="-1" aria-labelledby="modalEdit-ContenidoLabel"
+  aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <form method="POST" class="was-validated" id="formModContenido">
+    {% csrf_token %}
+    <input type="hidden" id="txtIdContenido" name="txtIdContenido">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modalEdit-ContenidoLabel">Editar Contenido</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            onclick="restablecer()"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="selectModContenido" class="form-label">Selecciona una unidad</label>
+            <select class="form-select" aria-label="Default select example" id="selectModContenido"
+              name="selectModContenido" required>
+
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="nombreContenidoMod" class="form-label">Nombre del contenido</label>
+            <input type="text" class="form-control" id="nombreContenidoMod" name="nombreContenidoMod" maxlength="100"
+              required>
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Descripcion</label>
+            <textarea type="text" class="form-control" id="descripcionEdContenido" name="descripcionEdContenido"
+              maxlength="100"></textarea>
+            <div id="alertContainer" style="padding-top: 20px;padding-right: 10px;">
+              <div id="alertMessageModif" class="alert" style="display: none;"></div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" data-bs-dismiss="modal"
+              onclick="restablecer()">
+              <i class="fa fa-ban"></i> Cancelar
+            </button>
+            <button type="submit" id="btnGuardarCmUnidad" class="btn btn-sm btn-success">
+              <i class="fas fa-save"></i> Guardar cambios
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </form>
+</div>
+
+<!--Modal Eliminar-->
+<div class="modal fade" id="modalDelet" tabindex="-1" aria-labelledby="modalDeletLabel" aria-hidden="true"
+  data-backdrop="static" data-keyboard="false">
+  <form class="was-validated" id="formDeletUnidad">
+    {% csrf_token %}
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalDeletLabel">Eliminar Contenido</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="modalContenido">
+          <div class="mb-3">
+            <p>¿Estás seguro de que deseas eliminar esta contenido?</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" data-bs-dismiss="modal">
+            <i class="fa fa-ban"></i>
+            Cancelar
+          </button>
+          <button type="submit" onclick='delete_contenido(" + idUnidad + ")' class="btn btn-sm btn-success">
+            <i class="fas fa-save"></i>
+            Aceptar
+          </button>
+          <div id="alerta">
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
 {% endblock %}
 {% block js %}
 <script src="{% static 'js/contenido.js'%}"></script>

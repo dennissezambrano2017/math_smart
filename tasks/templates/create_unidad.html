@@ -78,6 +78,112 @@
         </div>
     </div>
 </div>
+<!--Modal Eliminar-->
+<div class="modal fade" id="modalDelet" tabindex="-1" aria-labelledby="modalDeletLabel" aria-hidden="true"
+    data-backdrop="static" data-keyboard="false">
+    <form class="was-validated" id="formDeletUnidad">
+        {% csrf_token %}
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalDeletLabel">Eliminar Unidad</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+                </div>
+                <div class="modal-body" id="modalContenido">
+                    <div class="mb-3">
+                        <p>¿Estás seguro de que deseas eliminar esta unidad?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" data-bs-dismiss="modal">
+                        <i class="fa fa-ban"></i>
+                        Cancelar
+                    </button>
+                    <button type="submit" onclick='delete_unidad(" + idUnidad + ")' class="btn btn-sm btn-success">
+                        <i class="fas fa-save"></i>
+                        Aceptar
+                    </button>
+                    <div id="alerta">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!-- Modal Agregar -->
+<div class="modal fade" id="modalRegister-Unidad" tabindex="-1" aria-labelledby="modalRegister-UnidadLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <form method="POST" class="was-validated" id="formRgUnidad" novalidate>
+        {% csrf_token %}
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header"><h1 class="modal-title fs-5" id="modalRegister-UnidadLabel">Registro de Unidad</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="restablecer()"></button></div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Nombre de la Unidad</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" maxlength="100">
+                        <div id="alertContainer" style="padding-top: 20px;padding-right: 10px;">
+                            <div id="alertMessageRegister" class="alert" style="display: none;"></div>
+                        </div></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" data-bs-dismiss="modal" 
+                    onclick="restablecer()"><i
+                            class="fa fa-ban"></i>
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-sm btn-success">
+                        <i class="fas fa-save"></i>
+                        Guardar
+                    </button>
+                    <div id="alerta"> </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- Modal Modificar -->
+<div class="modal fade" id="modalEdit-Unidad" tabindex="-1" aria-labelledby="modalEdit-UnidadLabel" aria-hidden="true"
+    data-backdrop="static" data-keyboard="false">
+    <form method="POST" class="was-validated" id="formModUnidad">
+        {% csrf_token %}
+        <input type="hidden" id="txtIdUnidad" name="txtIdUnidad">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalEdit-UnidadLabel">Editar Unidad</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="restablecer()"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="txtEdUnidadNombre" class="form-label">Nombre de la
+                            Unidad</label>
+                        <input type="text" class="form-control" id="txtEdUnidadNombre" name="txtEdUnidadNombre"
+                            maxlength="100">
+                        <div id="alertContainer" style="padding-top: 20px;padding-right: 10px;">
+                            <div id="alertMessageEdit" class="alert" style="display: none;"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal"
+                            data-bs-dismiss="modal" onclick="restablecer()">
+                            <i class="fa fa-ban"></i> Cancelar
+                        </button>
+                        <button type="submit" id="btnGuardarCmUnidad" class="btn btn-sm btn-success">
+                            <i class="fas fa-save"></i> Guardar cambios
+                        </button>
+                        <div id="alertaMod"></div> <!-- Aquí se mostrará el mensaje -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+
 {% endblock %}
 {% block js %}
 <script src="{% static 'js/unidad.js'%}"></script>
