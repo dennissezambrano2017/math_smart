@@ -152,3 +152,4 @@ MEDIA_URL = '/media/'
 
 # Define la ruta absoluta en el sistema de archivos donde se almacenarán los archivos de medios
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+YOUTUBE_DATA_API_KEY='AIzaSyBGLWHRtzQStN1SWYF6KkrqioC-PHXM56U'
