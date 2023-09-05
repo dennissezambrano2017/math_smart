@@ -16,11 +16,11 @@ $(".btn-tema").click(function (e) {
                 var shortLink = enlace.substring(32);
                 var pdf = data.pdf;
                 // Ajustar la ruta para que coincida con la estructura de carpetas
-                pdfurl = pdf.replace('/pdfs/pdfs/', '/pdfs/'); 
+                //pdfurl = pdf.replace('/pdfs/pdfs/', '/pdfs/'); 
 
                 //pdfViewer.setDocument(pdf);
                 // Actualizar la URL del visor de PDF
-                $('#pdfViewer').attr('src', pdfurl);
+                $('#pdfViewer').attr('src', pdf);
                 $('#videoViewer').attr('src', 'https://www.youtube.com/embed/' + shortLink);
                 dataPreguntas = data.preguntas
 

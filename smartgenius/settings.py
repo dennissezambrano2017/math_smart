@@ -147,3 +147,8 @@ if not DEBUG:
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# Define la URL base para los archivos de medios (por ejemplo, imágenes, archivos PDF)
+MEDIA_URL = '/media/'
+
+# Define la ruta absoluta en el sistema de archivos donde se almacenarán los archivos de medios
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
