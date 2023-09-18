@@ -37,8 +37,10 @@ else:
 
 
 ALLOWED_HOSTS = []
-SOCIAL_AUTH_FACEBOOK_KEY = "854610086044869"
-SOCIAL_AUTH_FACEBOOL_SECRET = "3b7ea8b6f51fd3da148f211ffd71f732"
+#SOCIAL_AUTH_FACEBOOK_KEY = "854610086044869"
+#SOCIAL_AUTH_FACEBOOL_SECRET = "3b7ea8b6f51fd3da148f211ffd71f732"
+#SOCIAL_AUTH_REDIRECT_IS_HTTPS = False
+
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
@@ -54,7 +56,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -159,7 +160,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/resources')
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 YOUTUBE_DATA_API_KEY='AIzaSyBGLWHRtzQStN1SWYF6KkrqioC-PHXM56U'
 
-AUTHENTICATION_BACKENDS ={
-    'social_core.backends.facebook.Facebook0Auth2',
-    'django.contrib.auth.backends.ModelBackend'
-}
+#AUTHENTICATION_BACKENDS = {
+#    'social_core.backends.facebook.FacebookOAuth2',
+#    'django.contrib.auth.backends.ModelBackend'
+#}
