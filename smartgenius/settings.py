@@ -160,6 +160,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/resources')
 YOUTUBE_DATA_API_KEY='AIzaSyBGLWHRtzQStN1SWYF6KkrqioC-PHXM56U'
 
 AUTHENTICATION_BACKENDS ={
-    'social_core.backends.facebook.facebook0Auth2',
+    'social_core.backends.facebook.Facebook0Auth2',
     'django.contrib.auth.backends.ModelBackend'
 }
