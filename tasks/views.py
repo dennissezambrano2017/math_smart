@@ -611,6 +611,7 @@ def vwGetMaterial_Tema(request):
                 'temas_list': combined_temas_list,
                 'ejercicios': ejercicio_data,
             }
+            print(material.archivo_pdf.url)
             return JsonResponse(data)
         except Exception as e:
             return JsonResponse({'result': '0', 'message': 'Error en buscar la información del contenido'})
