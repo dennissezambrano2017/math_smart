@@ -1044,6 +1044,7 @@ def buscar_youtube(request):
         print(request.POST.get('search'))
         search_params = {
             'part': 'snippet',
+            'chart':'mostPopular',
             'q': request.POST.get('search'),
             'key': settings.YOUTUBE_DATA_API_KEY,
             'maxResults': 10,

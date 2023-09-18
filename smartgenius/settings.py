@@ -37,6 +37,8 @@ else:
 
 
 ALLOWED_HOSTS = []
+SOCIAL_AUTH_FACEBOOK_KEY = "854610086044869"
+SOCIAL_AUTH_FACEBOOL_SECRET = "3b7ea8b6f51fd3da148f211ffd71f732"
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
@@ -52,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -148,8 +151,15 @@ if not DEBUG:
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Define la URL base para los archivos de medios (por ejemplo, imágenes, archivos PDF)
-MEDIA_URL = '/media/'
+MEDIA_URL = '/pdfs/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/resources')
+
 
 # Define la ruta absoluta en el sistema de archivos donde se almacenarán los archivos de medios
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 YOUTUBE_DATA_API_KEY='AIzaSyBGLWHRtzQStN1SWYF6KkrqioC-PHXM56U'
+
+AUTHENTICATION_BACKENDS ={
+    'social_core.backends.facebook.facebook0Auth2',
+    'django.contrib.auth.backends.ModelBackend'
+}
