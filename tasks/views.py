@@ -286,17 +286,25 @@ def vwUnidad(request):
 def create_unidad(request):
     if request.method == 'POST':
         nombre_unidad = request.POST.get('nombre')
-        curso_unidad = request.POST.get('curso')
+        curso_unidad = request.POST.get('nivel-academico')
+        print(curso_unidad)
         if not nombre_unidad or not curso_unidad:
             return JsonResponse({'result': '0', 'message': 'Por favor ingrese todos los datos para la unidad.'})
         try:
+            if curso_unidad == '1':
+                name_curso = "Matemática BGU 1"
+            elif curso_unidad == '2':
+                name_curso = "Matemática BGU 2"
+            else:
+                name_curso = "Matemática BGU 3"
+
             unUnidad = Unidad()
             unUnidad.nombre = request.POST['nombre']
-            unUnidad.curso = request.POST['curso']
+            unUnidad.curso = name_curso
             unUnidad.save()
             return JsonResponse({'result': '1'})
         except Exception as e:
-            return JsonResponse({'result': '0', 'message': 'Error al modificar la unidad, por favor intente nuevamente.'})
+            return JsonResponse({'result': '0', 'message': 'Error al guardar el registro de la unidad, por favor intente nuevamente.'})
 
 # Vista que modifica los datos de un administrador
 
@@ -305,16 +313,23 @@ def create_unidad(request):
 def edit_unidad(request):
     if request.method == 'POST':
         nombre_unidad = request.POST.get('txtEdUnidadNombre')
-        curso_unidad = request.POST.get('txtEdUnidadCurso')
+        curso_unidad = request.POST.get('selectEditUnidad')
+        print(curso_unidad,nombre_unidad)
         if not nombre_unidad or not curso_unidad:
             return JsonResponse({'result': '0', 'message': 'Por favor ingrese todos los datos para la unidad.'})
         try:
             unUnidad = Unidad.objects.get(pk=request.POST['txtIdUnidad'])
             unUnidad.nombre = request.POST['txtEdUnidadNombre']
-            unUnidad.curso = request.POST['txtEdUnidadCurso']
+            if curso_unidad == '1':
+                name_curso = "Matemática BGU 1"
+            elif curso_unidad == '2':
+                name_curso = "Matemática BGU 2"
+            else:
+                name_curso = "Matemática BGU 3"
+            unUnidad.curso = name_curso
             unUnidad.save()
             messages.success(
-                request, 'El administrador se modificó exitosamente.')
+                request, 'La unidad se modificó exitosamente.')
             return JsonResponse({'result': '1'})
         except Exception as e:
             return JsonResponse({'result': '0', 'message': 'Error al modificar la unidad, por favor intente nuevamente.'})

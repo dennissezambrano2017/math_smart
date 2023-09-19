@@ -166,10 +166,9 @@
                         <input type="text" class="form-control" id="nombre" name="nombre" maxlength="100" required>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Nivel academico</label>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Selecionar el nivel</option>
-                            <option value="1">Matemática BGU 1</option>
+                        <label for="nivel-academico" class="form-label">Seleccionar el nivel academico</label>
+                        <select class="form-select" aria-label="Default select example" id="nivel-academico" name="nivel-academico">
+                            <option value="1" selected>Matemática BGU 1</option>
                             <option value="2">Matemática BGU 2</option>
                             <option value="3">Matemática BGU 3</option>
                         </select>
@@ -215,8 +214,13 @@
                             maxlength="100" required>
                     </div>
                     <div class="mb-3">
-                        <label for="txtEdUnidadCurso" class="form-label">Nombre del nivel</label>
-                        <input type="text" class="form-control" id="txtEdUnidadCurso" name="txtEdUnidadCurso" maxlength="100" required>
+                        <label for="selectEditUnidad" class="form-label">Seleccione el nivel academico:</label>
+                        <select class="form-select" aria-label="Disabled select" id="selectEditUnidad" name="selectEditUnidad"
+                            required>
+                            <option value="1" selected>Matemática BGU 1</option>
+                            <option value="2">Matemática BGU 2</option>
+                            <option value="3">Matemática BGU 3</option>
+                        </select>
                         <div id="alertContainer" style="padding-top: 20px;padding-right: 10px;">
                             <div id="alertMessageRegister" class="alert" style="display: none;"></div>
                         </div>

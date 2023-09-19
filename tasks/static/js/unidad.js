@@ -40,8 +40,22 @@ $(".btnObtenerUnidad").click(function () {
         if (d.result == '1') {
             console.log(d.curso,d.nombre);
             $("#txtEdUnidadNombre").val(d.nombre);
-            $("#txtEdUnidadCurso").val(d.curso);
             $("#txtIdUnidad").val(d.id);
+            console.log(d.curso)
+            var nivel_academico_seleccionado = d.curso;
+
+            // Obtén el elemento select
+            var selectEditUnidad = document.getElementById("selectEditUnidad");
+
+            // Recorre las opciones y establece el atributo selected en la opción correcta
+            for (var i = 0; i < selectEditUnidad.options.length; i++) {
+                if (selectEditUnidad.options[i].text === nivel_academico_seleccionado) {
+                    selectEditUnidad.options[i].selected = true;
+                    break;
+                }
+            }
+
+
         } else {
             show_modal("Mensaje informativo",
                 "Error al obtener la unidad, por favor intente nuevamente.",
@@ -79,7 +93,10 @@ $(document).on('submit', '#formModUnidad', function (e) {
             // Actualizar la fila de la tabla con los nuevos datos
             var idUnidad = $("#txtIdUnidad").val(); // Obtiene el ID de la unidad del formulario
             var nuevoNombre = $("#txtEdUnidadNombre").val(); // Obtiene el nuevo nombre de la unidad del formulario
-            var nuevoCurso = $("#txtEdUnidadCurso").val();
+            var selectEditUnidad = document.getElementById("selectEditUnidad");
+            var opcionSeleccionada = selectEditUnidad.options[selectEditUnidad.selectedIndex];
+
+            var nuevoCurso = opcionSeleccionada.text;
             actualizarFilaTabla(idUnidad, nuevoNombre,nuevoCurso);
 
         } else {
@@ -124,7 +141,7 @@ function delete_unidad(){
     });
 }
 
-function actualizarFilaTabla(idUnidad, nuevoNombre) {
+function actualizarFilaTabla(idUnidad, nuevoNombre,nuevoCurso) {
     // Buscar la fila correspondiente a idUnidad en la tabla y actualizar el nombre
     var fila = $("tr[data-id='" + idUnidad + "']");
     fila.find(".nombre-unidad").text(nuevoNombre);

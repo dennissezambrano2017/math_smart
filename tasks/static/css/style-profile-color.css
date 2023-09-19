@@ -1,47 +1,47 @@
 body.dark-mode {
-  background-color: rgb(8, 8, 8);
+  background-color: rgb(39, 35, 35);
   color: #fff;
 }
 
 body.light-mode {
   background-color: #fff;
-  color: rgb(8, 8, 8);
+  color: rgb(39, 35, 35);
 }
 body.dark-mode main {
-  background-color: rgb(8, 8, 8);
+  background-color: rgb(39, 35, 35);
   color: #fff;
 }
 
 body.light-mode main {
   background-color: #fff;
-  color: rgb(8, 8, 8);
+  color: rgb(39, 35, 35);
 }
 body.dark-mode header.encabezados-contenido {
-  background-color: rgb(8, 8, 8);
+  background-color: rgb(39, 35, 35);
   color: #fff;
 }
 body.light-mode header.encabezados-contenido {
   background-color: #fff;
-  color: rgb(8, 8, 8);
+  color: rgb(39, 35, 35);
 }
 body.dark-mode .profile-container {
-  background-color: rgb(8, 8, 8);
+  background-color: rgb(39, 35, 35);
   color: #fff;
 }
 
 body.light-mode .profile-container {
   background-color: #fff;
-  color: rgb(8, 8, 8);
+  color: rgb(39, 35, 35);
 }
 
 body.dark-mode .card-body {
-  background-color: rgb(8, 8, 8);
+  background-color: rgb(39, 35, 35);
   color: #fff;
 }
 
 body.light-mode .card-body {
   background-color: #fff;
-  color: rgb(8, 8, 8);
+  color: rgb(39, 35, 35);
 }
 
 /* Modo Oscuro */
@@ -50,7 +50,7 @@ body.dark-mode .caja-contenido-adentro,
 body.dark-mode .caja-description,
 body.dark-mode .caja-tema,
 body.dark-mode .caja-recursos{
-  background-color: rgb(8, 8, 8);
+  background-color: rgb(39, 35, 35);
   color: #fff;
 }
 
@@ -61,7 +61,7 @@ body.light-mode .caja-description,
 body.light-mode .caja-tema,
 body.light-mode .caja-recursos{
   background-color: #fff;
-  color: rgb(8, 8, 8);
+  color: rgb(39, 35, 35);
 }
 
 
@@ -69,7 +69,7 @@ body.light-mode .caja-recursos{
 
 /* Estilos para el modo oscuro */
 body.dark-mode .table {
-  background-color: rgb(8, 8, 8);
+  background-color: rgb(39, 35, 35);
   color: #fff; /* Cambia el color del texto a blanco en modo oscuro */
 }
 
@@ -80,7 +80,7 @@ body.dark-mode .table th {
 }
 
 body.dark-mode .table td {
-  background-color: #111;
+  background-color: rgb(39, 35, 35);
   color: #fff; /* Color de fondo para las celdas de datos en modo oscuro */
 }
 
