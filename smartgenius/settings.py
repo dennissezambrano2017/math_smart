@@ -67,6 +67,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.media.MediaMiddleware',
 ]
 X_FRAME_OPTIONS = 'ALLOW-FROM *'
 
@@ -153,8 +154,8 @@ if not DEBUG:
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Define la URL base para los archivos de medios (por ejemplo, imágenes, archivos PDF)
 MEDIA_URL = '/pdfs/'
-#MEDIA_ROOT = os.path.join(BASE_DIR, 'static/resources')
-MEDIA_ROOT = os.path.join('tasks/static/img')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/resources')
+#MEDIA_ROOT = os.path.join('tasks/static/img')
 
 
 # Define la ruta absoluta en el sistema de archivos donde se almacenarán los archivos de medios
