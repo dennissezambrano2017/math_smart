@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 # Create your models here.
 class Unidad(models.Model):
     nombre = models.CharField(max_length=100)
+    curso = models.CharField(max_length=100, default="None")
 
     def __str__(self):
         return self.nombre

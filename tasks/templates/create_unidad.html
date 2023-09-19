@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}Unidad{% endblock %}
 {% block content %}
-<h2 class="dash-title">Listado de Unidad</h2>
+<h2 class="dash-title" style="color: #fdb128">Listado de Unidad</h2>
 <section class="row pl-5 w-100">
     <section class="form-group justify-content-center">
         <section class="col-sm-12">
@@ -18,17 +18,37 @@
                   margin: 3px;;
                 }
             </style>
-            <div class="d-flex flex-row-reverse">
-                <div class="p-2 custom-cursor btn btn-light" onclick="abrirPDF('https://educacion.gob.ec/wp-content/uploads/downloads/2016/08/curriculo/Matematica/Matematica_BGU_3.pdf')">Matematica BGU 3</div>
-                <div class="p-2 custom-cursor btn btn-light" onclick="abrirPDF('https://educacion.gob.ec/wp-content/uploads/downloads/2016/08/curriculo/Matematica/Matematica_BGU_2.pdf')">Matematica BGU 2</div>
-                <div class="p-2 custom-cursor btn btn-light" onclick="abrirPDF('https://educacion.gob.ec/wp-content/uploads/downloads/2018/04/curriculo/1BGU-Matematicas.pdf')">Matematica BGU 1</div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-4"> <!-- Tamaño definido para el contenedor izquierdo, por ejemplo, 4 columnas -->
+                        
+                      </div>
+                      <div class="col-8 text-align-center"> <!-- Tamaño definido para el contenedor derecho, por ejemplo, 8 columnas -->
+                        <div class="d-flex justify-content-center">
+                            <div>Recursos academicos</div>
+                        </div>
+                        <div class="d-flex flex-row-reverse">
+                            <div class="p-2 custom-cursor btn btn-light" onclick="abrirPDF('https://educacion.gob.ec/wp-content/uploads/downloads/2016/08/curriculo/Matematica/Matematica_BGU_3.pdf')">
+                                <i class="fa-solid fa-book"></i>
+                                Matemática BGU 3
+                            </div>
+                            <div class="p-2 custom-cursor btn btn-light" onclick="abrirPDF('https://educacion.gob.ec/wp-content/uploads/downloads/2016/08/curriculo/Matematica/Matematica_BGU_2.pdf')">
+                                <i class="fa-solid fa-book"></i>
+                                Matemática BGU 2
+                            </div>
+                            <div class="p-2 custom-cursor btn btn-light" onclick="abrirPDF('https://educacion.gob.ec/wp-content/uploads/downloads/2018/04/curriculo/1BGU-Matematicas.pdf')"><i class="fa-solid fa-book"></i>
+                                Matemática BGU 1
+                            </div>
+                          <script>
+                            function abrirPDF(url) {
+                                // Abre una nueva ventana o pestaña con la URL del PDF
+                                window.open(url, '_blank');
+                            }
+                          </script>
+                        </div>
+                      </div>
+                </div>
             </div>
-              <script>
-                function abrirPDF(url) {
-                    // Abre una nueva ventana o pestaña con la URL del PDF
-                    window.open(url, '_blank');
-                }
-              </script>
             <div id="alertContainer" class="position-absolute top-0 end-0"
                 style="padding-top: 20px;padding-right: 10px;">
                 <div id="alertMessage" class="alert" style="display: none;"></div>
@@ -45,6 +65,7 @@
                 <tr style="text-align: center; padding: 4px 8px;">
                     <th scope="col">Id</th>
                     <th scope="col">Nombre</th>
+                    <th scope="col">Nivel academico</th>
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
@@ -52,8 +73,9 @@
                 {% if unidad %}
                 {% for u in unidad %}
                 <tr style="text-align: left;" data-id="{{ u.id }}">
-                    <th scope="row">{{ u.id }}</th>
+                    <td scope="row">{{ u.id }}</td>
                     <td class="nombre-unidad">{{ u.nombre }}</td>
+                    <td class="curso-unidad">{{ u.curso }}</td>
                     <td style="text-align: center;">
                         <a class="btn btn-danger" href="javascript:confi_delet_unidad({{u.id}});"
                         data-bs-placement="top"
@@ -141,7 +163,17 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Nombre de la Unidad</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" maxlength="100">
+                        <input type="text" class="form-control" id="nombre" name="nombre" maxlength="100" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Nivel academico</label>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Selecionar el nivel</option>
+                            <option value="1">Matemática BGU 1</option>
+                            <option value="2">Matemática BGU 2</option>
+                            <option value="3">Matemática BGU 3</option>
+                        </select>
+
                         <div id="alertContainer" style="padding-top: 20px;padding-right: 10px;">
                             <div id="alertMessageRegister" class="alert" style="display: none;"></div>
                         </div>
@@ -180,9 +212,13 @@
                         <label for="txtEdUnidadNombre" class="form-label">Nombre de la
                             Unidad</label>
                         <input type="text" class="form-control" id="txtEdUnidadNombre" name="txtEdUnidadNombre"
-                            maxlength="100">
+                            maxlength="100" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtEdUnidadCurso" class="form-label">Nombre del nivel</label>
+                        <input type="text" class="form-control" id="txtEdUnidadCurso" name="txtEdUnidadCurso" maxlength="100" required>
                         <div id="alertContainer" style="padding-top: 20px;padding-right: 10px;">
-                            <div id="alertMessageEdit" class="alert" style="display: none;"></div>
+                            <div id="alertMessageRegister" class="alert" style="display: none;"></div>
                         </div>
                     </div>
                     <div class="modal-footer">

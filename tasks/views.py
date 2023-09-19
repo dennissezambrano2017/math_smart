@@ -236,7 +236,7 @@ def profile(request):
         df = df.sort_values(by='cantidad_practicas', ascending=False)
 
         # Crear el gráfico de barras utilizando Plotly Express
-        fig = px.bar(df, x='tema', y='cantidad_practicas', title='Temas más Practicados',
+        fig = px.bar(df, x='tema', y='cantidad_practicas', title='Temas más practicados General',
                      color='tema', labels={'tema': 'Tema', 'cantidad_practicas': 'Cantidad de Prácticas'})
 
         # Personalizar el diseño del gráfico
@@ -286,11 +286,13 @@ def vwUnidad(request):
 def create_unidad(request):
     if request.method == 'POST':
         nombre_unidad = request.POST.get('nombre')
-        if not nombre_unidad:
-            return JsonResponse({'result': '0', 'message': 'Por favor ingrese un nombre para la unidad.'})
+        curso_unidad = request.POST.get('curso')
+        if not nombre_unidad or not curso_unidad:
+            return JsonResponse({'result': '0', 'message': 'Por favor ingrese todos los datos para la unidad.'})
         try:
             unUnidad = Unidad()
             unUnidad.nombre = request.POST['nombre']
+            unUnidad.curso = request.POST['curso']
             unUnidad.save()
             return JsonResponse({'result': '1'})
         except Exception as e:
@@ -303,11 +305,13 @@ def create_unidad(request):
 def edit_unidad(request):
     if request.method == 'POST':
         nombre_unidad = request.POST.get('txtEdUnidadNombre')
-        if not nombre_unidad:
-            return JsonResponse({'result': '0', 'message': 'Por favor ingrese un nombre para la unidad.'})
+        curso_unidad = request.POST.get('txtEdUnidadCurso')
+        if not nombre_unidad or not curso_unidad:
+            return JsonResponse({'result': '0', 'message': 'Por favor ingrese todos los datos para la unidad.'})
         try:
             unUnidad = Unidad.objects.get(pk=request.POST['txtIdUnidad'])
             unUnidad.nombre = request.POST['txtEdUnidadNombre']
+            unUnidad.curso = request.POST['txtEdUnidadCurso']
             unUnidad.save()
             messages.success(
                 request, 'El administrador se modificó exitosamente.')
@@ -341,7 +345,7 @@ def vwGetUnidad(request):
         try:
             idUnidad = request.GET['idUnidad']
             unUnidad = Unidad.objects.get(pk=idUnidad)
-            return JsonResponse({'result': '1', 'nombre': unUnidad.nombre, 'id': unUnidad.pk})
+            return JsonResponse({'result': '1', 'nombre': unUnidad.nombre,'curso': unUnidad.curso, 'id': unUnidad.pk})
         except Exception as e:
             return JsonResponse({'result': '0'})
 

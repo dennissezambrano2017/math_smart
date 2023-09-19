@@ -38,7 +38,9 @@ $(".btnObtenerUnidad").click(function () {
         dataType: 'json',
     }).done(function (d) {
         if (d.result == '1') {
+            console.log(d.curso,d.nombre);
             $("#txtEdUnidadNombre").val(d.nombre);
+            $("#txtEdUnidadCurso").val(d.curso);
             $("#txtIdUnidad").val(d.id);
         } else {
             show_modal("Mensaje informativo",
@@ -77,7 +79,8 @@ $(document).on('submit', '#formModUnidad', function (e) {
             // Actualizar la fila de la tabla con los nuevos datos
             var idUnidad = $("#txtIdUnidad").val(); // Obtiene el ID de la unidad del formulario
             var nuevoNombre = $("#txtEdUnidadNombre").val(); // Obtiene el nuevo nombre de la unidad del formulario
-            actualizarFilaTabla(idUnidad, nuevoNombre);
+            var nuevoCurso = $("#txtEdUnidadCurso").val();
+            actualizarFilaTabla(idUnidad, nuevoNombre,nuevoCurso);
 
         } else {
             // Mostrar la alerta de error
@@ -125,6 +128,7 @@ function actualizarFilaTabla(idUnidad, nuevoNombre) {
     // Buscar la fila correspondiente a idUnidad en la tabla y actualizar el nombre
     var fila = $("tr[data-id='" + idUnidad + "']");
     fila.find(".nombre-unidad").text(nuevoNombre);
+    fila.find(".curso-unidad").text(nuevoCurso);
 }
 
 $(document).ready(function () {

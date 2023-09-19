@@ -5,27 +5,7 @@
 <di class="container by-5">
     {% csrf_token %}
     <h4>Bienvenid@ a Smart Genius {% if user_username %}{{ user_email }}{% else %}Invitado{% endif %}</h4>
-    {% if user.is_authenticated %}
-    {% if perms.tasks.add_unidad %}
-    <div class="container mt-4">
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
-                {{ grafico_html | safe }}
-            </div>
-        </div>
-    </div>
-    {% else %}
-    <div class="container mt-4">
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
-                
-            </div>
-        </div>
-    </div>
-    {% endif %}
-    {% endif %}
- 
-
+    
     <!-- Barra de progreso circular -->
     <div class="circle-progress">
         {% if user.is_authenticated %}
@@ -76,5 +56,24 @@
         {% endif %}
         {% endif %}
     </div>
+    {% if user.is_authenticated %}
+    {% if perms.tasks.add_unidad %}
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                {{ grafico_html | safe }}
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endif %}
 </div>
 {% endblock %}

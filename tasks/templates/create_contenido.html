@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}Contenido{% endblock %}
 {% block content %}
-<h2 class="dash-title">Listado de Contenido</h2>
+<h2 class="dash-title" style="color: #fdb128">Listado de Contenido</h2>
 <section class="row pl-5 w-100">
   <section class="form-group justify-content-center">
     <section class="col-sm-12">
@@ -50,7 +50,7 @@
         {% if contenido %}
         {% for u in contenido %}
         <tr class="cuerpo-tabla" data-id="{{ u.id }}">
-          <th scope="row">{{ u.id }}</th>
+          <td scope="row">{{ u.id }}</td>
           <td class="nombre-contenido">{{ u.nombre }}</td>
           <td class="descripcion-contenido">{{ u.descripcion }}</td>
           <td class="unidad-contenido">{{ u.unidad }}</td>
