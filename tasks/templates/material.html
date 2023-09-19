@@ -422,7 +422,7 @@
 <!-- Modal Editar Material -->
 <div class="modal fade" id="modalEdit-material" tabindex="-1" aria-labelledby="modalEdit-materialLabel"
     aria-hidden="true" data-backdrop="static" data-keyboard="false">
-    <form method="POST" class="was-validated" id="formEditarMaterial" novalidate>
+    <form method="POST" class="was-validated" id="formEditarMaterial" novalidate enctype="multipart/form-data">
         {% csrf_token %}
         <div class="modal-dialog modal-xl">
             <div class="modal-content">

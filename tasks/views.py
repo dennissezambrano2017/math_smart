@@ -46,50 +46,64 @@ def signup(request):
         })
     else:
         if request.POST['password1'] == request.POST['password2']:
-            try:
-                # Register User
-                user = User.objects.create_user(
-                    username=request.POST['username'], email=request.POST['email'], password=request.POST['password1'])
-                # Verificar el valor del botón de radio seleccionado
-                user_type = request.POST.get('btnradio')
-                if user_type == 'docente':
-                    permissions_to_assign = [
-                        'add_contenido',
-                        'change_contenido',
-                        'delete_contenido',
-                        'view_contenido',
-                        'add_material',
-                        'change_material',
-                        'delete_material',
-                        'view_material',
-                        'add_tema',
-                        'change_tema',
-                        'delete_tema',
-                        'view_tema',
-                        'add_unidad',
-                        'change_unidad',
-                        'delete_unidad',
-                        'view_unidad',
-                    ]
-                    for permission_code in permissions_to_assign:
-                        permission = Permission.objects.get(codename=permission_code)
-                        user.user_permissions.add(permission)
-                    user.is_staff = True
-                else:
-                    # No dar permiso como docente
-                    user.is_staff = False
-                user.save()
-                login(request, user)
-                return redirect('perfil')
-            except IntegrityError:
+            password = request.POST['password1']
+            if len(password) < 8:
                 return render(request, 'signup.html', {
                     'form': UserCreationForm,
-                    'error': 'El usuario ya existe'
+                    'error': 'La contraseña debe tener al menos 8 caracteres.'
                 })
+            elif not any(char.isupper() for char in password) or \
+                 not any(char.islower() for char in password) or \
+                 not any(char.isdigit() for char in password) or \
+                 not any(char in '!@#$%^&*()_-+=<>,.?/:;{|}~' for char in password):
+                return render(request, 'signup.html', {
+                    'form': UserCreationForm,
+                    'error': 'La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.'
+                })
+            else:
+                try:
+                    # Register User
+                    user = User.objects.create_user(
+                        username=request.POST['username'], email=request.POST['email'], password=request.POST['password1'])
+                    # Verificar el valor del botón de radio seleccionado
+                    user_type = request.POST.get('btnradio')
+                    if user_type == 'docente':
+                        permissions_to_assign = [
+                            'add_contenido',
+                            'change_contenido',
+                            'delete_contenido',
+                            'view_contenido',
+                            'add_material',
+                            'change_material',
+                            'delete_material',
+                            'view_material',
+                            'add_tema',
+                            'change_tema',
+                            'delete_tema',
+                            'view_tema',
+                            'add_unidad',
+                            'change_unidad',
+                            'delete_unidad',
+                            'view_unidad',
+                        ]
+                        for permission_code in permissions_to_assign:
+                            permission = Permission.objects.get(codename=permission_code)
+                            user.user_permissions.add(permission)
+                        user.is_staff = True
+                    else:
+                        # No dar permiso como docente
+                        user.is_staff = False
+                    user.save()
+                    login(request, user)
+                    return redirect('perfil')
+                except IntegrityError:
+                    return render(request, 'signup.html', {
+                        'form': UserCreationForm,
+                        'error': 'El usuario ya existe'
+                    })
         return render(request, 'signup.html', {
             'form': UserCreationForm,
-            'error': 'Contraseña no coinciden'
-        })
+            'error': 'Contraseña no coinciden'})
 
 
 def signin(request):

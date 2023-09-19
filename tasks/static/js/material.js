@@ -578,6 +578,7 @@ $(document).on('submit', '#formEditarMaterial', function (e) {
         processData: false,
         contentType: false,
         dataType: 'json',
+        cache: false,
         success: function (data) {
             if (data.result === '1') {
                 // Mostrar la alerta de éxito después de completar la modificación
