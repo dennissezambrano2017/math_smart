@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User,Permission
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
-from django.db import IntegrityError
+from django.db import IntegrityError,transaction
 from .models import Unidad, Contenido, Material, Tema, Ejercicio, Puntuacion
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -16,7 +16,7 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, Tabl
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
 from django.core.files.base import ContentFile
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied,ObjectDoesNotExist
 import json
 from django.conf import settings
 from isodate import parse_duration
@@ -611,7 +611,8 @@ def vwGetMaterial_Tema(request):
                 'temas_list': combined_temas_list,
                 'ejercicios': ejercicio_data,
             }
-            print(material.archivo_pdf.url)
+            pdf_url = request.build_absolute_uri(material.archivo_pdf.url)
+            print(pdf_url)
             return JsonResponse(data)
         except Exception as e:
             return JsonResponse({'result': '0', 'message': 'Error en buscar la información del contenido'})
@@ -646,23 +647,40 @@ def vwObtener_Temas(request):
 
 @login_required
 def vwCreate_material(request):
-    if request.method == 'POST':
-        enlace = request.POST.get('enlace')
-        archivo = request.FILES.get('archivo_pdf')
-        tema_id = request.POST.get('tema_id')
-        if not enlace or not archivo or not tema_id:
-            return JsonResponse({'result': 'error', 'message': 'Por favor ingrese todo los datos'})
+    if request.method == 'GET':
         try:
-            tema = Tema.objects.get(pk=tema_id)
-            # Guardar el archivo en el modelo Material
-            material = Material(enlace=enlace, tema=tema)
-            material.archivo_pdf.save(
-                archivo.name, ContentFile(archivo.read()), save=True)
+            material_id = request.GET.get('idMaterial')
+            material = Material.objects.get(pk=material_id)
 
-            return JsonResponse({'result': 'success', 'message': 'Tema registrado exitosamente.'})
+            temas = material.tema_set.all()
+            temas_data = [{'id': tema.id, 'nombre': tema.nombre}
+                          for tema in temas]
+
+            ejercicios = material.ejercicio_set.all()
+            ejercicio_data = [
+                {'id': ejercicio.id, 'enunciado': ejercicio.enunciado} for ejercicio in ejercicios]
+
+            all_temas = Tema.objects.all()
+            unregistered_temas = all_temas.exclude(id__in=temas.values_list('id', flat=True))
+
+            temas_list_ = [{'id': tema.id, 'nombre': tema.nombre}
+                           for tema in unregistered_temas]
+
+            data = {
+                'result': '1',
+                'material_id': material_id,
+                'enlace': material.enlace,
+                'pdf': material.archivo_pdf.url,
+                'temas': temas_data,
+                'temas_list': temas_list_,
+                'ejercicios': ejercicio_data,
+            }
+
+            return JsonResponse(data)
+        except ObjectDoesNotExist:
+            return JsonResponse({'result': '0', 'message': 'El material no existe.'})
         except Exception as e:
-            return JsonResponse({'result': 'error', 'message': 'Error en registrar contenido'}, status=400)
-
+            return JsonResponse({'result': '0', 'message': 'Error en buscar la información del contenido: {}'.format(str(e))})
 
 @login_required
 def vwCreate_ejercicio(request):
@@ -875,18 +893,26 @@ def vwEdit_Material(request):
         enlace = request.POST.get('enlace')
         archivo = request.FILES.get('archivo_pdf')
         tema_id = request.POST.get('tema_id')
-        if not material_id or not enlace or not archivo:
-            return JsonResponse({'result': '0', 'message': 'Por favor ingrese los datos corresponciente.'})
+
+        if not material_id or not enlace:
+            return JsonResponse({'result': '0', 'message': 'Por favor ingrese los datos correspondientes.'})
+
         try:
             material = Material.objects.get(pk=material_id)
             material.enlace = enlace
             if archivo:
                 material.archivo_pdf = archivo
-            material.tema_id = tema_id
+            if tema_id:
+                material.tema_id = tema_id
             material.save()
-            return JsonResponse({'result': '1', 'message': 'El tema se modificó exitosamente.'})
+
+            pdf_url = request.build_absolute_uri(material.archivo_pdf.url)
+            print(pdf_url)
+            return JsonResponse({'result': '1', 'message': 'El material se modificó exitosamente.'})
+        except ObjectDoesNotExist:
+            return JsonResponse({'result': '0', 'message': 'El material no existe.'})
         except Exception as e:
-            return JsonResponse({'result': '0', 'message': 'Error al modificar el tema, por favor intente nuevamente.'})
+            return JsonResponse({'result': '0', 'message': 'Error al modificar el material, por favor intente nuevamente.'})
     else:
         # Si no es una solicitud POST, puedes manejarlo de acuerdo a tus necesidades
         return JsonResponse({'result': '0', 'message': 'Método no permitido.'})
@@ -911,7 +937,7 @@ def get_material_by_tema_id(request):
                 data = {
                     'result': '1',
                     'enlace': material.enlace,
-                    'pdf': material.archivo_pdf.url,
+                    'pdf': request.build_absolute_uri(material.archivo_pdf.url),
                     'preguntas': preguntas_data,
                 }
                 return JsonResponse(data)
