@@ -67,7 +67,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.media.MediaMiddleware',
 ]
 X_FRAME_OPTIONS = 'ALLOW-FROM *'
 
