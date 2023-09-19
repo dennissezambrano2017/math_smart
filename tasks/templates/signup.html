@@ -38,11 +38,32 @@
                   <label>
                      <i class="fa-solid fa-unlock-keyhole" style="color: #fdb128;"></i>
                      <input type="password" name="password1" id="password1" placeholder="Contraseña" required>
-                  </label>
-                  <label>
+                     <span class="eye-icon" onclick="togglePasswordVisibility('password1', this)">
+                        <i class="fa-solid fa-eye-slash"></i>
+                     </span>
+                   </label>
+                   <label>
                      <i class="fa-solid fa-unlock-keyhole" style="color: #fdb128;"></i>
                      <input type="password" name="password2" id="password2" placeholder="Repetir Contraseña" required>
-                  </label>
+                     <span class="eye-icon" onclick="togglePasswordVisibility('password2', this)">
+                        <i class="fa-solid fa-eye-slash"></i>
+                     </span>
+                   </label>
+                   
+                   <script>
+                   function togglePasswordVisibility(passwordFieldId, iconElement) {
+                     var passwordInput = document.getElementById(passwordFieldId);
+                   
+                     if (passwordInput.type === "password") {
+                       passwordInput.type = "text";
+                       iconElement.innerHTML = '<i class="fa-solid fa-eye"></i>';
+                     } else {
+                       passwordInput.type = "password";
+                       iconElement.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+                     }
+                   }
+                   </script>
+                   
                   {% if error %}
                   <p class="error-message">{{ error }}</p>
                   {% endif %}

@@ -12,10 +12,28 @@
                     title="Haz clic aquí para registrar nuevas unidades.">
                 <i class="fa fa-plus-circle"></i> Nueva Unidad
             </button>
+            <style>
+                .custom-cursor {
+                  cursor: pointer;
+                  margin: 3px;;
+                }
+            </style>
+            <div class="d-flex flex-row-reverse">
+                <div class="p-2 custom-cursor btn btn-light" onclick="abrirPDF('https://educacion.gob.ec/wp-content/uploads/downloads/2016/08/curriculo/Matematica/Matematica_BGU_3.pdf')">Matematica BGU 3</div>
+                <div class="p-2 custom-cursor btn btn-light" onclick="abrirPDF('https://educacion.gob.ec/wp-content/uploads/downloads/2016/08/curriculo/Matematica/Matematica_BGU_2.pdf')">Matematica BGU 2</div>
+                <div class="p-2 custom-cursor btn btn-light" onclick="abrirPDF('https://educacion.gob.ec/wp-content/uploads/downloads/2018/04/curriculo/1BGU-Matematicas.pdf')">Matematica BGU 1</div>
+            </div>
+              <script>
+                function abrirPDF(url) {
+                    // Abre una nueva ventana o pestaña con la URL del PDF
+                    window.open(url, '_blank');
+                }
+              </script>
             <div id="alertContainer" class="position-absolute top-0 end-0"
                 style="padding-top: 20px;padding-right: 10px;">
                 <div id="alertMessage" class="alert" style="display: none;"></div>
             </div>
+            
         </section>
 
     </section>

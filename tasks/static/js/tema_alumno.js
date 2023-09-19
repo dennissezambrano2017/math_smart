@@ -2,6 +2,7 @@ var tema = 0;
 var nombreTema='';
 var dataPreguntas = [];
 var totalpreguntas = 0;
+var correct = 0;
 $(".btn-tema").click(function (e) {
     e.preventDefault();
     var id_tema = $(this).attr('id');
@@ -81,7 +82,7 @@ function escogerPreguntaAleatoria() {
             n = 0;
         }
         if (npreguntas.length == getDataDB.length) {
-            var correct = preguntas_correctas;
+             correct = preguntas_correctas;
             if (mostrar_pantalla_practica_terminada) {
                 swal.fire({
                     title: "Práctica finalizado",
@@ -92,7 +93,7 @@ function escogerPreguntaAleatoria() {
                     registrarPractica(tema, correct, totalpreguntas);
 
                     // Redirigir a la página de contenido_alumno después de guardar la práctica
-                    window.location.href = '/contenido_alumno/';
+                    window.location.reload();
                 });
             }
             if (reiniciar_puntos_al_reiniciar_la_practica) {
@@ -182,14 +183,14 @@ function oprimir_btn(i) {
     //Compara las respuestas seleccionada con la respuesta correcta
     if (posibles_respuestas[i] == pregunta.opciones[pregunta.resp_correcta]) {
         preguntas_correctas++;
-        btn_correspondiente[i].css("background", "lightgreen");
+        btn_correspondiente[i].css("background", "#28a745");
     } else {
-        btn_correspondiente[i].css("background", "pink");
+        btn_correspondiente[i].css("background", "#d45d68");
         preguntas_incorrectas++;
     }
     for (let j = 0; j < 4; j++) {
         if (posibles_respuestas[j] == pregunta.opciones[pregunta.resp_correcta]) {
-            btn_correspondiente[j].css("background", "lightgreen");
+            btn_correspondiente[j].css("background", "#28a745");
             break;
         }
     }
@@ -200,7 +201,7 @@ function oprimir_btn(i) {
         setTimeout(function () {
             reiniciar();
             suspender_botones = false;
-        }, 2000);
+        }, 3000);
     }
 
 }
@@ -281,9 +282,10 @@ openModalButton.addEventListener('click', function () {
 
 var cancelarModalButton = document.getElementById('cancelarModalButton');
 cancelarModalButton.addEventListener('click', function () {
-    window.location.href = '/contenido_alumno/';
+    registrarPractica(tema, correct, totalpreguntas);
+    window.location.reload();
 });
 var close = document.getElementById('close');
 close.addEventListener('click', function () {
-    window.location.href = '/contenido_alumno/';
+    window.location.reload();
 });

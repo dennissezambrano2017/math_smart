@@ -661,40 +661,21 @@ def vwObtener_Temas(request):
 
 @login_required
 def vwCreate_material(request):
-    if request.method == 'GET':
+    if request.method == 'POST':
+        enlace = request.POST.get('enlace')
+        archivo = request.FILES.get('archivo_pdf')
+        tema_id = request.POST.get('tema_id')
+        if not enlace or not archivo or not tema_id:
+            return JsonResponse({'result': 'error', 'message': 'Por favor ingrese todos los datos'})
         try:
-            material_id = request.GET.get('idMaterial')
-            material = Material.objects.get(pk=material_id)
-
-            temas = material.tema_set.all()
-            temas_data = [{'id': tema.id, 'nombre': tema.nombre}
-                          for tema in temas]
-
-            ejercicios = material.ejercicio_set.all()
-            ejercicio_data = [
-                {'id': ejercicio.id, 'enunciado': ejercicio.enunciado} for ejercicio in ejercicios]
-
-            all_temas = Tema.objects.all()
-            unregistered_temas = all_temas.exclude(id__in=temas.values_list('id', flat=True))
-
-            temas_list_ = [{'id': tema.id, 'nombre': tema.nombre}
-                           for tema in unregistered_temas]
-
-            data = {
-                'result': '1',
-                'material_id': material_id,
-                'enlace': material.enlace,
-                'pdf': material.archivo_pdf.url,
-                'temas': temas_data,
-                'temas_list': temas_list_,
-                'ejercicios': ejercicio_data,
-            }
-
-            return JsonResponse(data)
-        except ObjectDoesNotExist:
-            return JsonResponse({'result': '0', 'message': 'El material no existe.'})
+            tema = Tema.objects.get(pk=tema_id)
+            # Guardar el archivo en el modelo Material
+            material = Material(enlace=enlace, tema=tema)
+            material.archivo_pdf.save(
+                archivo.name, ContentFile(archivo.read()), save=True)
+            return JsonResponse({'result': 'success', 'message': 'Tema registrado exitosamente.'})
         except Exception as e:
-            return JsonResponse({'result': '0', 'message': 'Error en buscar la información del contenido: {}'.format(str(e))})
+            return JsonResponse({'result': 'error', 'message': 'Error en registrar contenido'}, status=400)
 
 @login_required
 def vwCreate_ejercicio(request):

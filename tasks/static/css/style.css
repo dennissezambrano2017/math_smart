@@ -321,6 +321,12 @@
     display: inline;
     vertical-align: text-bottom;
 }
+
+.eye-icon {
+    cursor: pointer;
+    user-select: none;
+  }
+
 /*Reposible form*/
 @media screen and (max-width:750px) {
     hml {

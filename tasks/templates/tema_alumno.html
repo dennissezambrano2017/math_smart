@@ -32,7 +32,9 @@
     </div>
     <script>
         document.getElementById('atras').addEventListener('click', function () {
-            window.history.back();
+            var nuevaURL = "{% url 'contenido_alu' %}";
+            // Redirige a la nueva URL
+            window.location.href = nuevaURL;
         });
     </script>
 </div>

@@ -30,53 +30,51 @@
     <div class="circle-progress">
         {% if user.is_authenticated %}
         {% if perms.tasks.add_unidad %}
-        <div class="circle-container">
+        <a class="circle-container text-decoration-none"  href="{% url 'unidad' %}">
             <div class="circle">
                 <i class="fas fa-clipboard-check circle-icon"></i>
             </div>
             <div class="circle-label">Unidades</div>
-        </div>
-        <div class="circle-container">
+        </a>
+        <a class="circle-container text-decoration-none" href="{% url 'contenido' %}">
             <div class="circle">
                 <i class="fas fa-book-open circle-icon"></i>
             </div>
             <div class="circle-label">Contenidos</div>
-        </div>
-        <div class="circle-container">
+        </a>
+        <a class="circle-container text-decoration-none" href="{% url 'material' %}">
             <div class="circle">
                 <i class="fas fa-file-alt circle-icon"></i>
             </div>
             <div class="circle-label">Materiales</div>
-        </div>
-        <div class="circle-container">
+        </a>
+        <a class="circle-container text-decoration-none" href="{% url 'temas' %}">
             <div class="circle">
                 <i class="fas fa-lightbulb circle-icon"></i>
             </div>
             <div class="circle-label">Temas</div>
-        </div>
+        </a>
         {% else %}
-        <div class="circle-container">
+        <a class="circle-container text-decoration-none" href="{% url 'contenido_alu' %}">
             <div class="circle">
                 <i class="fa-solid fa-book-open circle-icon"></i>
             </div>
             <div class="circle-label">Contenido</div>
-        </div>
-        <div class="circle-container">
+        </a>
+        <a class="circle-container text-decoration-none" href="{% url 'perfil_alu' %}">
             <div class="circle">
                 <i class="fa-solid fa-user circle-icon"></i>
             </div>
             <div class="circle-label">Perfil</div>
-        </div>
-        <div class="circle-container">
+        </a>
+        <a class="circle-container text-decoration-none" href="{% url 'avance_alu' %}">
             <div class="circle">
                 <i class="fa-solid fa-layer-group circle-icon"></i>
             </div>
             <div class="circle-label">Mi Avance</div>
-        </div>
+        </a>
         {% endif %}
         {% endif %}
     </div>
-
-
-    </div>
-    {% endblock %}
+</div>
+{% endblock %}
